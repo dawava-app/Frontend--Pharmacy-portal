@@ -1,0 +1,47 @@
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.field label {
+  font-size: 0.82rem;
+  color: #5b6777;
+  font-weight: 600;
+}
+
+.error {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #be123c;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.78rem;
+}
+
+.footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+:host ::ng-deep {
+  .p-dialog ,.p-dialog-content {
+    padding-top: 0.5rem;
+    background: whitesmoke;
+    color: black;
+  }
+
+  .field .p-inputtext,
+  .field .p-inputtextarea {
+    width: 100%;
+    background: white;
+    color: black;
+  }
+}

@@ -1,0 +1,53 @@
+<div class="login-page">
+  <div class="login-card">
+    <h1>Sign in</h1>
+    <p class="subtitle">Use your pharmacy credentials.</p>
+
+    @if (errorMessage) {
+      <div class="error">{{ errorMessage }}</div>
+    }
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <label for="email">Email</label>
+      <input id="email" type="text" formControlName="email" placeholder="yourname@gmail.com" />
+      @if (email?.invalid && email?.touched) {
+        <small class="error-text">Email is required.</small>
+      }
+
+      <label for="password">Password</label>
+      <div class="password-row">
+        <input
+          id="password"
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          placeholder="••••••••"
+        />
+        <button type="button" (click)="togglePasswordVisibility()">
+          {{ showPassword ? 'Hide' : 'Show' }}
+        </button>
+      </div>
+      @if (password?.invalid && password?.touched) {
+        <small class="error-text">Password is required and must be at least 6 characters.</small>
+      }
+
+      <div class="actions">
+        <button type="button" class="link" (click)="showForgotPasswordModal = true">
+          Forgot password?
+        </button>
+        <button type="button" class="link" (click)="showItSupportModal = true">Contact IT support</button>
+      </div>
+
+      <button class="submit" type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'Signing in...' : 'Sign in' }}
+      </button>
+    </form>
+  </div>
+</div>
+
+@if (showForgotPasswordModal) {
+  <app-forgot-password-modal (closeModal)="showForgotPasswordModal = false" />
+}
+
+@if (showItSupportModal) {
+  <app-it-support-modal (closeModal)="showItSupportModal = false" />
+}

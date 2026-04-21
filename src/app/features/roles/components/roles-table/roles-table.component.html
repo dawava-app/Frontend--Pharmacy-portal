@@ -1,0 +1,54 @@
+<p-table
+    [value]="roles"
+    [loading]="isLoading"
+    styleClass="roles-table"
+    [tableStyle]="{ 'min-width': '58rem' }"
+>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Role Name</th>
+            <th>Description</th>
+            <th>Permissions Count</th>
+            <th>Created Date</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-role>
+        <tr>
+            <td>
+                <div class="role-cell">
+                    <span class="role-dot"></span>
+                    <span>{{ role.name }}</span>
+                </div>
+            </td>
+            <td class="description">{{ role.description }}</td>
+            <td>
+                <p-tag [value]="getPermissionCount(role.id) + ' Permissions'" severity="secondary"></p-tag>
+            </td>
+            <td>{{ getCreatedAtLabel(role.createdAt) }}</td>
+            <td>
+                <div class="action-icons">
+                    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" severity="secondary"><hugeicons-icon [icon]="EyeIcon"></hugeicons-icon></p-button>
+                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="secondary"><hugeicons-icon [icon]="PencilEdit01Icon"></hugeicons-icon></p-button>
+                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="secondary"><hugeicons-icon [icon]="Delete02Icon"></hugeicons-icon></p-button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="5" class="state-row">No roles found.</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<footer class="pagination-row">
+    <span>{{ rangeLabel }}</span>
+    <p-paginator
+        [first]="first"
+        [rows]="pageSize"
+        [totalRecords]="totalRecords"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        (onPageChange)="pageChange.emit($event)"
+    ></p-paginator>
+</footer>

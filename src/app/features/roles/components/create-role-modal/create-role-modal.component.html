@@ -1,0 +1,57 @@
+<p-dialog
+    header="Create Role"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [closable]="!isSubmitting"
+    [visible]="visible"
+    [style]="{ width: '32rem' }"
+    (onHide)="onHide()"
+>
+    <div class="dialog-content">
+        <div class="field">
+            <label for="roleName">Role name</label>
+            <input
+                id="roleName"
+                pInputText
+                [ngModel]="roleName()"
+                (ngModelChange)="roleName.set($event)"
+                placeholder="Example: Inventory Supervisor"
+            />
+        </div>
+
+        <div class="field">
+            <label for="roleDescription">Description</label>
+            <textarea
+                id="roleDescription"
+                pInputTextarea
+                rows="4"
+                [ngModel]="roleDescription()"
+                (ngModelChange)="roleDescription.set($event)"
+                placeholder="Describe role access and responsibilities"
+            ></textarea>
+        </div>
+
+        @if (error) {
+            <div class="error">{{ error }}</div>
+        }
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="footer-actions">
+            <p-button
+                label="Cancel"
+                severity="secondary"
+                [outlined]="true"
+                [disabled]="isSubmitting"
+                (onClick)="onHide()"
+            />
+            <p-button
+                label="Create Role"
+                [loading]="isSubmitting"
+                [disabled]="!roleName().trim() || !roleDescription().trim()"
+                (onClick)="onSubmit()"
+            />
+        </div>
+    </ng-template>
+</p-dialog>

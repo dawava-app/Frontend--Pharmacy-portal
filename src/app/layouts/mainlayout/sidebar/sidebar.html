@@ -1,5 +1,51 @@
-<div class="max-w-xl h-full">
+<div class=" h-full border-r border-gray-300">
+    <div class="flex flex-col  text-center gap-2 p-4 text-text-secondary font-medium text-xs">
+        <div class="flex mb-10 items-center gap-1">
+            <hugeicons-icon [icon]="PharmacyLogo" [size]="30" color="#14B8A5" [strokeWidth]="1.5"></hugeicons-icon>
+            <div>
+                <h3 class="text-lg text-start font-bold">PharmaLogix</h3>
+                <p class="text-text-tertiary uppercase text-xs font-semibold ">Management System</p>
+            </div>
+        </div>
+        <a routerLink="/dashboard" class="flex items-center gap-2 hover:text-text-tertiary hover:bg-bg-card rounded p-2">
+            <hugeicons-icon [icon]="DashboardIcon" [size]="20" color="currentColor" [strokeWidth]="1.5"></hugeicons-icon>
+            Dashboard
+        </a>
+        <a routerLink="/medications" class="flex items-center gap-2  hover:text-text-tertiary hover:bg-bg-card rounded p-2">
+            <hugeicons-icon [icon]="Store01Icon" [size]="20" color="currentColor" [strokeWidth]="1.5"></hugeicons-icon>
+            inventory
+        </a>
+        <a routerLink="/orders" class="flex items-center gap-2  hover:text-text-tertiary hover:bg-bg-card rounded p-2">
+           <hugeicons-icon [icon]="LicenseDraftIcon" [size]="20" color="currentColor" [strokeWidth]="1.5"></hugeicons-icon>
+            Sales
+        </a>
+        <a routerLink="/orders" class="flex items-center gap-2  hover:text-text-tertiary hover:bg-bg-card rounded p-2">
+           <hugeicons-icon [icon]="LicenseDraftIcon" [size]="20" color="currentColor" [strokeWidth]="1.5"></hugeicons-icon>
+            Pharmqacy Branches
+        </a>
+        <a routerLink="/suppliers" class="flex items-center gap-2  hover:text-text-tertiary hover:bg-bg-card rounded p-2">
+            <hugeicons-icon [icon]="Message02Icon" [size]="20" color="currentColor" [strokeWidth]="1.5"></hugeicons-icon>
+            Message
+        </a>
+        <a routerLink="/suppliers" class="flex items-center gap-2  hover:text-text-tertiary hover:bg-bg-card rounded p-2">
+            <hugeicons-icon [icon]="Analytics03Icon" [size]="20" color="currentColor" [strokeWidth]="1.5"></hugeicons-icon>
+            Report
+        </a>
 
-tesdting
-    
+        <a routerLink="/suppliers" class="flex items-center gap-2  hover:text-text-tertiary hover:bg-bg-card rounded p-2">
+            <hugeicons-icon [icon]="UserIcon" [size]="20" color="currentColor" [strokeWidth]="1.5"></hugeicons-icon>
+            Manage Staff
+        </a>
+        <a routerLink="/roles" class="flex items-center gap-2  hover:text-text-tertiary hover:bg-bg-card rounded p-2">
+            <hugeicons-icon [icon]="MentoringIcon" [size]="20" color="currentColor" [strokeWidth]="1.5"></hugeicons-icon>
+            Roles and Permissions
+        </a>
+        <p class="text-text-placeholder  text-start text-xs mt-4 uppercase">
+        system
+        </p>
+        <a routerLink="/suppliers" class="flex items-center gap-2  hover:text-text-tertiary hover:bg-bg-card rounded p-2">
+            <hugeicons-icon [icon]="Setting07Icon" [size]="20" color="currentColor" [strokeWidth]="1.5"></hugeicons-icon>
+            settings
+        </a>
+    </div>
 </div>
