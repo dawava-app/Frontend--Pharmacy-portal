@@ -1,0 +1,8 @@
+<div class="support-backdrop" (click)="onClose()">
+  <div class="support-card" (click)="$event.stopPropagation()">
+    <h3>IT Support</h3>
+    <p>If you cannot sign in, contact IT support.</p>
+    <button type="button" (click)="openMail()">Email support</button>
+    <button type="button" (click)="onClose()">Close</button>
+  </div>
+</div>

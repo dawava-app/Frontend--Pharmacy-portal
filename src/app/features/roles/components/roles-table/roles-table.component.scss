@@ -1,0 +1,88 @@
+.state-row {
+  text-align: center;
+  color: #6b7280;
+  padding: 1.4rem;
+}
+
+.role-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 600;
+}
+
+.role-dot {
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 999px;
+  background: rgba(23, 181, 165, 0.12);
+  border: 1px solid rgba(23, 181, 165, 0.4);
+}
+
+.description {
+  color: #5e6b78;
+  max-width: 24rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.action-icons {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.pagination-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  color: #7a8795;
+  font-size: 0.76rem;
+}
+
+:host ::ng-deep {
+  .roles-table {
+    border: 1px solid #ebeff5;
+    border-radius: 0.9rem;
+    overflow: hidden;
+  }
+
+  .roles-table .p-datatable-thead > tr > th {
+    text-align: left;
+    font-size: 0.68rem;
+    color: #7a8795;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    padding: 0.85rem 0.9rem;
+    background: #f9fbfd;
+  }
+
+  .roles-table .p-datatable-tbody > tr > td {
+    padding: 0.9rem;
+    border-top: 1px solid #edf1f5;
+    font-size: 0.83rem;
+    color: #1f2a37;
+    background: #f9fbfd;
+  }
+
+  .roles-table .p-tag {
+    background: #edf1f7;
+    color: #4b5563;
+    font-size: 0.72rem;
+    border-radius: 999px;
+  }
+
+  .action-icons .p-button {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-color: #d8e0e8;
+    color: #66758a;
+  }
+
+  .pagination-row .p-paginator {
+    border: 0;
+    padding: 0;
+    background: transparent;
+  }
+}

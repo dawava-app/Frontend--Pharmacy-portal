@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-authlayout',
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './authlayout.html',
   styleUrl: './authlayout.scss',
 })

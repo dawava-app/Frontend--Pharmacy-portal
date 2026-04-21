@@ -1,0 +1,48 @@
+<section class="roles-page">
+    <header class="top-bar">
+        <input pInputText
+            #searchInput
+            type="text"
+            placeholder="Search roles, permissions or staff..."
+            class="search-input"
+            (input)="onSearch(searchInput.value)"
+        />
+        <div class="top-actions">
+            <p-button icon="pi pi-bell" [rounded]="true" [text]="true" severity="secondary"></p-button>
+            <p-button icon="pi pi-question-circle" [rounded]="true" [text]="true" severity="secondary"></p-button>
+        </div>
+    </header>
+
+    <div class="roles-card">
+        <div class="title-row">
+            <div>
+                <h1>Roles &amp; Permissions</h1>
+                <p>Manage system access levels and staff responsibilities.</p>
+            </div>
+            <p><a routerLink="permissions">Permissions</a></p>
+            <p-button label="Create Role" icon="pi pi-plus" styleClass="create-btn" (onClick)="openCreateRoleModal()"></p-button>
+        </div>
+
+        @if (error()) {
+            <div class="alert">{{ error() }}</div>
+        }
+
+        <app-roles-table
+            [roles]="pagedRoles()"
+            [isLoading]="isLoading()"
+            [first]="first()"
+            [pageSize]="pageSize()"
+            [totalRecords]="filteredRoles().length"
+            [rangeLabel]="rangeLabel()"
+            (pageChange)="onPageChange($event)"
+        />
+    </div>
+</section>
+
+<app-create-role-modal
+    [visible]="isCreateModalVisible()"
+    [isSubmitting]="isCreating()"
+    [error]="createError()"
+    (cancel)="closeCreateRoleModal()"
+    (submitRole)="onCreateRole($event)"
+/>

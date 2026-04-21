@@ -1,1 +1,16 @@
 @import 'tailwindcss';
+
+@theme{
+    --color-text-primary: #1E293B; 
+    --color-text-secondary: #475569;
+    --color-text-tertiary: #14B8A5;
+    --color-text-placeholder: #94A3B8;
+    --color-bg-card: rgba(20, 184, 165, 0.1);
+    --gradient-brand: linear-gradient(135deg, rgba(9, 82, 74, 1) 0%, rgba(20, 184, 165, 1) 100%);
+}
+
+@layer utilities {
+    .bg-brand-gradient {
+        background-image: var(--gradient-brand);
+    }
+}

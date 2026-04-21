@@ -1,0 +1,86 @@
+.roles-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 100%;
+  padding: 0.5rem;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 18rem;
+}
+
+.top-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.roles-card {
+  background: #fff;
+  border: 1px solid #e3e8ee;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.title-row h1 {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #1f2a37;
+}
+
+.title-row p {
+  margin: 0.2rem 0 0;
+  color: #7a8795;
+  font-size: 0.8rem;
+}
+
+.alert {
+  background: #fff4e8;
+  color: #b45309;
+  border: 1px solid #f8d7a2;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.78rem;
+}
+
+:host ::ng-deep {
+  .top-bar .p-inputtext {
+    border-radius: 999px;
+    background: #f8fafc;
+    border-color: #dce3eb;
+    font-size: 0.8rem;
+    height: 2rem;
+  }
+
+  .top-actions .p-button {
+    width: 1.9rem;
+    height: 1.9rem;
+    color: #758294;
+    border-color: #dce3eb;
+  }
+
+  .create-btn {
+    background: #17b5a5;
+    border-color: #17b5a5;
+    border-radius: 0.65rem;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+  }
+}
