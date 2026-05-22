@@ -1,0 +1,39 @@
+<app-form-wrapper [currentStep]="3" title="Owner Information"
+    subtitle="Please provide the legal details for the primary pharmacy owner.">
+
+    <form [formGroup]="form" class="form" novalidate>
+
+        <label class="field field--full">
+            <span>Full Legal Name</span>
+            <input type="text" formControlName="fullName" />
+        </label>
+
+        <label class="field">
+            <span>National ID</span>
+            <input type="text" formControlName="nationalId" inputmode="numeric" />
+        </label>
+
+        <label class="field">
+            <span>Phone Number</span>
+            <input type="tel" formControlName="phone" />
+        </label>
+
+        <label class="field field--full">
+            <span>Email Address</span>
+            <input type="email" formControlName="email" />
+        </label>
+
+        <p class="notice">
+            🔒 Your personal data is protected and stored securely.
+        </p>
+
+    </form>
+
+    <ng-container footer>
+        <button type="button" class="btn btn--ghost" (click)="onBack()">← Back</button>
+        <button type="button" class="btn btn--primary" (click)="onNext()" [disabled]="form.invalid">
+            Continue →
+        </button>
+    </ng-container>
+
+</app-form-wrapper>

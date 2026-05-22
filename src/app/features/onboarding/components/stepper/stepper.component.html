@@ -1,0 +1,17 @@
+<ol class="stepper">
+    @for (step of steps; track step.index; let last = $last) {
+    <li class="stepper__item">
+        <div class="stepper__circle" [class.is-active]="isActive(step.index)"
+            [class.is-completed]="isCompleted(step.index)">
+            @if (isCompleted(step.index)) {
+            <span class="stepper__check" aria-hidden="true">✓</span>
+            } @else {
+            <span>{{ step.index }}</span>
+            }
+        </div>
+        @if (!last) {
+        <span class="stepper__line" [class.is-completed]="isCompleted(step.index)"></span>
+        }
+    </li>
+    }
+</ol>

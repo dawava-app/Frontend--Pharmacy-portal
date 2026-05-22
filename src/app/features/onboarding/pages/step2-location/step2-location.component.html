@@ -1,0 +1,97 @@
+<app-form-wrapper [currentStep]="2" title="Pharmacy Location"
+    subtitle="Step 2: Define your operational area and physical address.">
+    <form [formGroup]="form" class="form">
+        <div formArrayName="branches" class="branches">
+            @if (branches.length === 0) {
+                <div class="error-message error-message--box">
+                    <span class="error__icon">⚠️</span>
+                    <span class="error__text">At least one branch is required</span>
+                </div>
+            }
+            @for (group of branches.controls; track $index; let i = $index) {
+            <fieldset class="branch" [class.branch--main]="group.value.isMain" [formGroupName]="i">
+                <header class="branch__header">
+                    <div class="branch__title">
+                        <h3>Branch {{ i + 1 }}</h3>
+                        @if (group.value.isMain) {
+                            <span class="badge badge--main">Main</span>
+                        }
+                    </div>
+                    <div class="branch__actions">
+                        <label class="main-toggle">
+                            <input type="radio" name="mainBranch" [checked]="group.value.isMain"
+                                (change)="setMain(i)" />
+                            <span>Main branch</span>
+                        </label>
+                        @if (branches.length > 1) {
+                        <button type="button" class="btn btn--danger btn--sm" (click)="removeBranch(i)" aria-label="Remove branch">🗑️ Remove</button>
+                        }
+                    </div>
+                </header>
+
+                <div class="grid">
+                    <label class="field" [class.field--invalid]="isFieldInvalid(i, 'city')">
+                        <span class="field__label">City</span>
+                        <select formControlName="city" class="field__input">
+                            <option value="">Select a city</option>
+                            <option value="Cairo">Cairo</option>
+                            <option value="Alexandria">Alexandria</option>
+                            <option value="Giza">Giza</option>
+                        </select>
+                        @if (isFieldInvalid(i, 'city')) {
+                            <span class="field__error">{{ getErrorMessage(i, 'city') }}</span>
+                        }
+                    </label>
+
+                    <label class="field" [class.field--invalid]="isFieldInvalid(i, 'area')">
+                        <span class="field__label">Area / District</span>
+                        <input type="text" formControlName="area" placeholder="e.g. Westminster or Northern Quarter" class="field__input" />
+                        @if (isFieldInvalid(i, 'area')) {
+                            <span class="field__error">{{ getErrorMessage(i, 'area') }}</span>
+                        }
+                    </label>
+
+                    <label class="field field--full" [class.field--invalid]="isFieldInvalid(i, 'address')">
+                        <span class="field__label">Full Address</span>
+                        <textarea rows="2" formControlName="address"
+                            placeholder="Street name, building number, and floor" class="field__input"></textarea>
+                        @if (isFieldInvalid(i, 'address')) {
+                            <span class="field__error">{{ getErrorMessage(i, 'address') }}</span>
+                        }
+                    </label>
+
+                    <div class="field">
+                        <span class="field__label">Latitude</span>
+                        <input type="number" formControlName="lat" readonly class="field__input field__input--readonly" />
+                    </div>
+                    <div class="field">
+                        <span class="field__label">Longitude</span>
+                        <input type="number" formControlName="lng" readonly class="field__input field__input--readonly" />
+                    </div>
+                </div>
+
+                <div class="map-actions">
+                    <button type="button" class="btn btn--outline" (click)="autoDetect(i)">📍 Auto-detect current location</button>
+                    <button type="button" class="btn btn--ghost" (click)="simulateDrag(i)">🎯 Simulate map drag</button>
+                </div>
+
+                <!-- TODO: integrate map API later (Leaflet / Mapbox / Google Maps) -->
+                <div class="map-placeholder">
+                    🗺️ Map placeholder — drag pin to adjust precisely
+                </div>
+            </fieldset>
+            }
+        </div>
+
+        <button type="button" class="btn btn--outline" (click)="addBranch()" [disabled]="form.invalid">
+            + Add another branch
+        </button>
+    </form>
+
+    <ng-container footer>
+        <button type="button" class="btn btn--ghost" (click)="onBack()">← Back</button>
+        <button type="button" class="btn btn--primary" [disabled]="form.invalid || branches.length === 0" (click)="onNext()">
+            Save and Continue →
+        </button>
+    </ng-container>
+</app-form-wrapper>

@@ -1,7 +1,6 @@
 // ============================================================
 // Staff Dashboard Component
-// Path: src/app/features/dashboard/staff/staff-dashboard/
-// Files: staff-dashboard.ts | staff-dashboard.html | staff-dashboard.scss
+// Path: src/app/features/dashboard/pages/stuff-dashbaord/staff-dashboard.ts
 // ============================================================
 
 import {
@@ -11,99 +10,142 @@ import {
   HostListener,
   inject,
   signal,
+  computed,
+  PLATFORM_ID,
 } from '@angular/core';
-import { CommonModule }      from '@angular/common';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService }       from '../../../../core/services/auth.service';
-
-// ─── Interfaces ───────────────────────────────────────────────
-
-interface CurrentUser {
-  name:  string;
-  email: string;
-  role:  string;
-}
-
-interface BarData {
-  label:  string;
-  value:  number;
-  height: number;
-  active: boolean;
-}
-
-interface StockAlert {
-  name:     string;
-  quantity: number;
-  status:   'HIGH DEMAND' | 'STEADY';
-}
-
-interface SearchedItem {
-  name:  string;
-  count: number;
-}
-
-// ─── Component ────────────────────────────────────────────────
+import { isPlatformBrowser, NgClass, NgIf } from '@angular/common';
+import { Router, RouterLink, RouterLinkActive }      from '@angular/router';
+import { AuthService }             from '../../../../core/services/auth.service';
+import { StaffDashboardService }   from '../../services/staff-dashboard.service';
+import { DashboardService }        from '../../services/dashboard.service';
+import {
+  CurrentUser,
+  StaffKpiCard,
+  WeeklyBarData,
+  StockAlert,
+  SearchedItem,
+  InventoryStatus,
+  LoadingState,
+} from '../../models/dashboard.models';
 
 @Component({
   selector: 'app-staff-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [NgClass, NgIf, RouterLink, RouterLinkActive],
   templateUrl: './staff-dashboard.html',
   styleUrls: ['./staff-dashboard.scss'],
 })
 export class StaffDashboard implements OnInit, OnDestroy {
 
-  // ── DI ──────────────────────────────────────────────────────
+  // ── DI ────────────────────────────────────────────────────
+  private readonly staffSvc    = inject(StaffDashboardService);
+  private readonly dashSvc     = inject(DashboardService);
   private readonly authService = inject(AuthService);
   private readonly router      = inject(Router);
+  private readonly platformId  = inject(PLATFORM_ID);
 
-  // ── State ───────────────────────────────────────────────────
+  // ── Loading / error state ─────────────────────────────────
+  readonly loadingState = signal<LoadingState>('idle');
+  readonly errorMessage = signal<string | null>(null);
+
+  // ── Data signals ──────────────────────────────────────────
+  readonly currentUser     = signal<CurrentUser | null>(null);
+  readonly kpiCards        = signal<StaffKpiCard[]>([]);
+  readonly weeklyData      = signal<WeeklyBarData[]>([]);
+  readonly stockAlerts     = signal<StockAlert[]>([]);
+  readonly topSearched     = signal<SearchedItem[]>([]);
+  readonly inventoryStatus = signal<InventoryStatus>({ total: 0, inStockPct: 0, lowStockPct: 0, criticalPct: 0 });
+  readonly branchAddress   = signal<string>('—');
+
+  // ── Computed helpers ──────────────────────────────────────
+
+  /** First name of the current user (for the greeting). */
+  readonly firstName = computed(() => {
+    const name = this.currentUser()?.name ?? '';
+    return name.split(' ')[0] || 'Staff';
+  });
+
+  /**
+   * SVG donut chart dash-array values computed from inventoryStatus signal.
+   * Circumference of r=45 circle ≈ 282.74. We divide it by 100 to get 1% = 2.8274px.
+   */
+  readonly donutSegments = computed(() => {
+    const status = this.inventoryStatus();
+    const circ = 282.74; // 2π × 45
+    const inStock  = (status.inStockPct  / 100) * circ;
+    const lowStock = (status.lowStockPct / 100) * circ;
+    const critical = (status.criticalPct / 100) * circ;
+    const rest     = circ;
+
+    return {
+      inStock:  { array: `${inStock.toFixed(0)} ${(circ - inStock).toFixed(0)}`,  offset: '0'                            },
+      lowStock: { array: `${lowStock.toFixed(0)} ${(circ - lowStock).toFixed(0)}`, offset: `-${inStock.toFixed(0)}`       },
+      critical: { array: `${critical.toFixed(0)} ${(circ - critical).toFixed(0)}`,offset: `-${(inStock + lowStock).toFixed(0)}` },
+    };
+  });
+
+  // ── UI state ──────────────────────────────────────────────
   isProfileDropdownOpen = false;
 
-  currentUser: CurrentUser = {
-    name:  'Sarah Johnson',
-    email: 'sarah@pharmalogix.com',
-    role:  'Staff Pharmacist',
-  };
+  // ── Constants ─────────────────────────────────────────────
+  readonly greeting = this.dashSvc.getGreeting();
 
-  // ── Weekly Bar Chart Data ────────────────────────────────────
-  readonly weeklyData: BarData[] = [
-    { label: 'MON', value: 3200,  height: 80,  active: false },
-    { label: 'TUE', value: 4100,  height: 100, active: false },
-    { label: 'WED', value: 3800,  height: 95,  active: false },
-    { label: 'THU', value: 5200,  height: 130, active: false },
-    { label: 'FRI', value: 4800,  height: 120, active: true  },
-    { label: 'SAT', value: 3600,  height: 90,  active: false },
-    { label: 'SUN', value: 2900,  height: 72,  active: false },
-  ];
+  // ─────────────────────────────────────────────────────────
+  // Lifecycle
+  // ─────────────────────────────────────────────────────────
 
-  // ── Stock Alerts ─────────────────────────────────────────────
-  readonly stockAlerts: StockAlert[] = [
-    { name: 'Amoxicillin 500mg', quantity: 12, status: 'HIGH DEMAND' },
-    { name: 'Lisinopril 10mg',   quantity: 8,  status: 'STEADY'      },
-    { name: 'Metformin 850mg',   quantity: 5,  status: 'HIGH DEMAND' },
-  ];
-
-  // ── Top Searched ─────────────────────────────────────────────
-  readonly topSearched: SearchedItem[] = [
-    { name: 'Amoxicillin', count: 84 },
-    { name: 'Paracetamol', count: 62 },
-    { name: 'Ibuprofen',   count: 58 },
-    { name: 'Omeprazole',  count: 41 },
-  ];
-
-  // ── Lifecycle ────────────────────────────────────────────────
-  ngOnInit(): void {
-    // Optionally load current user from AuthService
-    // const userData = this.authService.getCurrentUser();
-    // if (userData) this.currentUser = userData;
+  async ngOnInit(): Promise<void> {
+    await this.loadDashboard();
   }
 
   ngOnDestroy(): void {
-    // Clean up if needed
+    // Nothing to tear down — services are singleton.
   }
 
-  // ── Dropdown ─────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────
+  // Data loading (public so template retry button can call it)
+  // ─────────────────────────────────────────────────────────
+
+  async loadDashboard(): Promise<void> {
+    this.loadingState.set('loading');
+    this.errorMessage.set(null);
+
+    try {
+      // TODO: Pass the real branchId from auth context once available.
+      //   const branchId = this.authService.getCurrentUser()?.branchId ?? '';
+      const snapshot = await this.staffSvc.getSnapshot();
+
+      this.currentUser.set(snapshot.user);
+      this.kpiCards.set(snapshot.kpiCards);
+      this.weeklyData.set(snapshot.weeklyData);
+      this.stockAlerts.set(snapshot.stockAlerts);
+      this.topSearched.set(snapshot.topSearched);
+      this.inventoryStatus.set(snapshot.inventoryStatus);
+      this.branchAddress.set(snapshot.branchAddress);
+
+      this.loadingState.set('success');
+    } catch (err) {
+      console.error('[StaffDashboard] Failed to load snapshot:', err);
+      this.errorMessage.set('Failed to load dashboard data. Please refresh.');
+      this.loadingState.set('error');
+    }
+  }
+
+  /** Sends a restock request for a given alert item. */
+  async requestRestock(medicineName: string): Promise<void> {
+    const branchId = this.currentUser()?.branchId ?? '';
+    try {
+      await this.staffSvc.requestRestock(medicineName, branchId);
+      // TODO: Show success toast notification.
+      await this.loadDashboard(); // Refresh after restock
+    } catch {
+      console.error('[StaffDashboard] Restock request failed for:', medicineName);
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // UI event handlers
+  // ─────────────────────────────────────────────────────────
 
   toggleProfileDropdown(): void {
     this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
@@ -114,21 +156,31 @@ export class StaffDashboard implements OnInit, OnDestroy {
   }
 
   /**
-   * Close dropdown when clicking outside the profile area.
+   * Closes the profile dropdown when clicking outside.
    * The template uses (click)="$event.stopPropagation()" on the
-   * dropdown itself so only outside clicks reach this listener.
+   * dropdown so only outside clicks reach this listener.
    */
   @HostListener('document:click')
   onDocumentClick(): void {
-    if (this.isProfileDropdownOpen) {
-      this.closeProfileDropdown();
-    }
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (this.isProfileDropdownOpen) this.closeProfileDropdown();
   }
 
-  // ── Auth ─────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────
+  // Auth
+  // ─────────────────────────────────────────────────────────
 
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+  // ─────────────────────────────────────────────────────────
+  // Track-by helpers
+  // ─────────────────────────────────────────────────────────
+
+  trackKpi(_: number, card: StaffKpiCard): string     { return card.id; }
+  trackBar(_: number, bar: WeeklyBarData): string     { return bar.label; }
+  trackAlert(_: number, a: StockAlert): string        { return a.name; }
+  trackSearch(_: number, s: SearchedItem): string     { return s.name; }
 }

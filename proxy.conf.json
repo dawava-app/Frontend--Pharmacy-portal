@@ -1,7 +1,8 @@
+
 {
   "/api": {
-    "target": "https://api.dawava.shape-shifters.tech",
-    "secure": true,
+    "target": "https://100.26.109.162/",
+    "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
   }

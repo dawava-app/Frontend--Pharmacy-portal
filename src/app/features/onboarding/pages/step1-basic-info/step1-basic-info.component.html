@@ -1,0 +1,50 @@
+<app-form-wrapper [currentStep]="1" title="Organization Setup"
+    subtitle="Please provide the foundational details for your pharmacy facility.">
+    <div class="form-container">
+        <form [formGroup]="form" class="form">
+            <label class="field" [class.field--invalid]="isFieldInvalid('pharmacyName')">
+                <span class="field__label">Pharmacy Name</span>
+                <input
+                    type="text"
+                    formControlName="pharmacyName"
+                    placeholder="e.g. Central Health Pharmaceuticals"
+                    class="field__input"
+                />
+                @if (isFieldInvalid('pharmacyName')) {
+                    <span class="field__error">{{ getErrorMessage('pharmacyName') }}</span>
+                }
+            </label>
+
+            <label class="field" [class.field--invalid]="isFieldInvalid('phone')">
+                <span class="field__label">Phone</span>
+                <input
+                    type="tel"
+                    formControlName="phone"
+                    placeholder="+1 (555) 000-0000"
+                    class="field__input"
+                />
+                @if (isFieldInvalid('phone')) {
+                    <span class="field__error">{{ getErrorMessage('phone') }}</span>
+                }
+            </label>
+
+            <label class="field" [class.field--invalid]="isFieldInvalid('email')">
+                <span class="field__label">Email</span>
+                <input
+                    type="email"
+                    formControlName="email"
+                    placeholder="contact@pharmacy.com"
+                    class="field__input"
+                />
+                @if (isFieldInvalid('email')) {
+                    <span class="field__error">{{ getErrorMessage('email') }}</span>
+                }
+            </label>
+        </form>
+    </div>
+
+    <ng-container footer>
+        <button type="button" class="btn btn--ghost">Save Draft</button>
+        <button type="button" class="btn btn--primary" [disabled]="form.invalid" (click)="onNext()">Next →</button>
+    </ng-container>
+</app-form-wrapper>

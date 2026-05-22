@@ -1,0 +1,90 @@
+// ============================================================
+// Dashboard Shared Styles — Loading / Error / Empty States
+// Path: src/app/features/dashboard/styles/_dashboard-states.scss
+//
+// Import into each dashboard's SCSS:
+//   @use '../../styles/dashboard-states' as states;
+//   or just paste these into the dashboard SCSS directly.
+// ============================================================
+
+// ── Loading Overlay ──────────────────────────────────────────
+.loading-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  gap: 16px;
+  color: #64748b;
+  font-size: 14px;
+
+  .loading-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #14b8a5;
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ── Error Banner ─────────────────────────────────────────────
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  color: #dc2626;
+  font-size: 14px;
+
+  svg { flex-shrink: 0; }
+
+  span { flex: 1; }
+
+  button {
+    padding: 6px 14px;
+    background: #dc2626;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:hover { background: #b91c1c; }
+  }
+}
+
+// ── Empty State ──────────────────────────────────────────────
+.empty-state {
+  padding: 32px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+// ── Avatar Placeholder ────────────────────────────────────────
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #14b8a5;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 50%;
+
+  &.large {
+    font-size: 18px;
+  }
+}

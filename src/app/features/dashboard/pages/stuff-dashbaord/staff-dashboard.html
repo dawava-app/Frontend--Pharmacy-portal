@@ -1,7 +1,15 @@
+<!-- ============================================================
+     Staff Dashboard Template — FIXED
+     Path: src/app/features/dashboard/pages/stuff-dashbaord/staff-dashboard.html
+     Fixes:
+       - Breadcrumb chevron SVG now has width/height (was rendering huge)
+       - Stat card icons restored (specific icons per card type)
+       - Greeting section layout fixed
+     ============================================================ -->
+
 <div class="container">
-  <!-- Sidebar -->
+  <!-- ═══════════════ SIDEBAR ════════════════════════════════ -->
   <aside class="sidebar">
-    <!-- Logo Section -->
     <div class="logo-section">
       <div class="logo-icon">
         <svg width="34" height="36" viewBox="0 0 34 36" fill="none">
@@ -15,7 +23,6 @@
       </div>
     </div>
 
-    <!-- Navigation -->
     <nav class="nav">
       <a routerLink="/dashboard/staff" routerLinkActive="active" class="nav-link">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -23,56 +30,74 @@
         </svg>
         <span>Dashboard</span>
       </a>
-      <a routerLink="/dashboard/inventory" routerLinkActive="active" class="nav-link">
+      <a routerLink="/inventory" routerLinkActive="active" class="nav-link">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M3 20C2.45 20 1.97917 19.8042 1.5875 19.4125C1.19583 19.0208 1 18.55 1 18V6.725C0.7 6.54167 0.458333 6.30417 0.275 6.0125C0.0916667 5.72083 0 5.38333 0 5V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V5C20 5.38333 19.9083 5.72083 19.725 6.0125C19.5417 6.30417 19.3 6.54167 19 6.725V18C19 18.55 18.8042 19.0208 18.4125 19.4125C18.0208 19.8042 17.55 20 17 20H3V20M3 7V18H17V7H3V7M2 5H18V2H2V5V5M7 12H13V10H7V12V12" fill="currentColor"/>
+          <path d="M3 20C2.45 20 1.97917 19.8042 1.5875 19.4125C1.19583 19.0208 1 18.55 1 18V6.725C0.7 6.54167 0.458333 6.30417 0.275 6.0125C0.0916667 5.72083 0 5.38333 0 5V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V5C20 5.38333 19.9083 5.72083 19.725 6.0125C19.5417 6.30417 19.3 6.54167 19 6.725V18C19 18.55 18.8042 19.0208 18.4125 19.4125C18.0208 19.8042 17.55 20 17 20H3ZM3 7V18H17V7H3ZM2 5H18V2H2V5ZM7 12H13V10H7V12Z" fill="currentColor"/>
         </svg>
         <span>Inventory</span>
       </a>
-      <a routerLink="/dashboard/sales" routerLinkActive="active" class="nav-link">
+      <a routerLink="/sales" routerLinkActive="active" class="nav-link">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M6 20C5.45 20 4.97917 19.8042 4.5875 19.4125C4.19583 19.0208 4 18.55 4 18C4 17.45 4.19583 16.9792 4.5875 16.5875C4.97917 16.1958 5.45 16 6 16C6.55 16 7.02083 16.1958 7.4125 16.5875C7.80417 16.9792 8 17.45 8 18C8 18.55 7.80417 19.0208 7.4125 19.4125C7.02083 19.8042 6.55 20 6 20V20M16 20C15.45 20 14.9792 19.8042 14.5875 19.4125C14.1958 19.0208 14 18.55 14 18C14 17.45 14.1958 16.9792 14.5875 16.5875C14.9792 16.1958 15.45 16 16 16C16.55 16 17.0208 16.1958 17.4125 16.5875C17.8042 16.9792 18 17.45 18 18C18 18.55 17.8042 19.0208 17.4125 19.4125C17.0208 19.8042 16.55 20 16 20V20M5.15 4L7.55 9H14.55L17.3 4H5.15V4M4.2 2H18.95C19.3333 2 19.625 2.17083 19.825 2.5125C20.025 2.85417 20.0333 3.2 19.85 3.55L16.3 9.95C16.1167 10.2833 15.8708 10.5417 15.5625 10.725C15.2542 10.9083 14.9167 11 14.55 11H7.1L6 13H18V15H6C5.25 15 4.68333 14.6708 4.3 14.0125C3.91667 13.3542 3.9 12.7 4.25 12.05L5.6 9.6L2 2H0V0H3.25L4.2 2V2" fill="currentColor"/>
+          <path d="M6 20C5.45 20 4.97917 19.8042 4.5875 19.4125C4.19583 19.0208 4 18.55 4 18C4 17.45 4.19583 16.9792 4.5875 16.5875C4.97917 16.1958 5.45 16 6 16C6.55 16 7.02083 16.1958 7.4125 16.5875C7.80417 16.9792 8 17.45 8 18C8 18.55 7.80417 19.0208 7.4125 19.4125C7.02083 19.8042 6.55 20 6 20M16 20C15.45 20 14.9792 19.8042 14.5875 19.4125C14.1958 19.0208 14 18.55 14 18C14 17.45 14.1958 16.9792 14.5875 16.5875C14.9792 16.1958 15.45 16 16 16C16.55 16 17.0208 16.1958 17.4125 16.5875C17.8042 16.9792 18 17.45 18 18C18 18.55 17.8042 19.0208 17.4125 19.4125C17.0208 19.8042 16.55 20 16 20M5.15 4L7.55 9H14.55L17.3 4H5.15M4.2 2H18.95C19.3333 2 19.625 2.17083 19.825 2.5125C20.025 2.85417 20.0333 3.2 19.85 3.55L16.3 9.95C16.1167 10.2833 15.8708 10.5417 15.5625 10.725C15.2542 10.9083 14.9167 11 14.55 11H7.1L6 13H18V15H6C5.25 15 4.68333 14.6708 4.3 14.0125C3.91667 13.3542 3.9 12.7 4.25 12.05L5.6 9.6L2 2H0V0H3.25L4.2 2Z" fill="currentColor"/>
         </svg>
         <span>Sales</span>
       </a>
-      <a routerLink="/dashboard/messages" routerLinkActive="active" class="nav-link">
+      <a routerLink="/messages" routerLinkActive="active" class="nav-link">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M4 12H12V10H4V12V12M4 9H16V7H4V9V9M4 6H16V4H4V6V6M0 20V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.0208 15.8042 18.55 16 18 16H4L0 20V20" fill="currentColor"/>
+          <path d="M4 12H12V10H4V12M4 9H16V7H4V9M4 6H16V4H4V6M0 20V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.0208 15.8042 18.55 16 18 16H4L0 20Z" fill="currentColor"/>
         </svg>
         <span>Messages</span>
       </a>
-      <a routerLink="/dashboard/reports" routerLinkActive="active" class="nav-link">
+      <a routerLink="/reports" routerLinkActive="active" class="nav-link">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M12 16V9H16V16H12V16M6 16V0H10V16H6V16M0 16V5H4V16H0V16" fill="currentColor"/>
+          <path d="M12 16V9H16V16H12ZM6 16V0H10V16H6ZM0 16V5H4V16H0Z" fill="currentColor"/>
         </svg>
         <span>Reports</span>
       </a>
-      <a routerLink="/dashboard/settings" routerLinkActive="active" class="nav-link">
+      <a routerLink="/settings" routerLinkActive="active" class="nav-link">
         <svg width="20" height="20" viewBox="0 0 20.1 20" fill="none">
-          <path d="M7.3 20L6.9 16.8C6.68333 16.7167 6.47917 16.6167 6.2875 16.5C6.09583 16.3833 5.90833 16.2583 5.725 16.125L2.75 17.375L0 12.625L2.575 10.675C2.55833 10.5583 2.55 10.4458 2.55 10.3375C2.55 10.2292 2.55 10.1167 2.55 10C2.55 9.88333 2.55 9.77083 2.55 9.6625C2.55 9.55417 2.55833 9.44167 2.575 9.325L0 7.375L2.75 2.625L5.725 3.875C5.90833 3.74167 6.1 3.61667 6.3 3.5C6.5 3.38333 6.7 3.28333 6.9 3.2L7.3 0H12.8L13.2 3.2C13.4167 3.28333 13.6208 3.38333 13.8125 3.5C14.0042 3.61667 14.1917 3.74167 14.375 3.875L17.35 2.625L20.1 7.375L17.525 9.325C17.5417 9.44167 17.55 9.55417 17.55 9.6625C17.55 9.77083 17.55 9.88333 17.55 10C17.55 10.1167 17.55 10.2292 17.55 10.3375C17.55 10.4458 17.5333 10.5583 17.5 10.675L20.075 12.625L17.325 17.375L14.375 16.125C14.1917 16.2583 14 16.3833 13.8 16.5C13.6 16.6167 13.4 16.7167 13.2 16.8L12.8 20H7.3V20M10.1 13.5C11.0667 13.5 11.8917 13.1583 12.575 12.475C13.2583 11.7917 13.6 10.9667 13.6 10C13.6 9.03333 13.2583 8.20833 12.575 7.525C11.8917 6.84167 11.0667 6.5 10.1 6.5C9.11667 6.5 8.2875 6.84167 7.6125 7.525C6.9375 8.20833 6.6 9.03333 6.6 10C6.6 10.9667 6.9375 11.7917 7.6125 12.475C8.2875 13.1583 9.11667 13.5 10.1 13.5Z" fill="currentColor"/>
+          <path d="M7.3 20L6.9 16.8C6.68333 16.7167 6.47917 16.6167 6.2875 16.5C6.09583 16.3833 5.90833 16.2583 5.725 16.125L2.75 17.375L0 12.625L2.575 10.675C2.55833 10.5583 2.55 10.4458 2.55 10.3375C2.55 10.2292 2.55 10.1167 2.55 10C2.55 9.88333 2.55 9.77083 2.55 9.6625C2.55 9.55417 2.55833 9.44167 2.575 9.325L0 7.375L2.75 2.625L5.725 3.875C5.90833 3.74167 6.1 3.61667 6.3 3.5C6.5 3.38333 6.7 3.28333 6.9 3.2L7.3 0H12.8L13.2 3.2C13.4167 3.28333 13.6208 3.38333 13.8125 3.5C14.0042 3.61667 14.1917 3.74167 14.375 3.875L17.35 2.625L20.1 7.375L17.525 9.325C17.5417 9.44167 17.55 9.55417 17.55 9.6625C17.55 9.77083 17.55 9.88333 17.55 10C17.55 10.1167 17.55 10.2292 17.55 10.3375C17.55 10.4458 17.5333 10.5583 17.5 10.675L20.075 12.625L17.325 17.375L14.375 16.125C14.1917 16.2583 14 16.3833 13.8 16.5C13.6 16.6167 13.4 16.7167 13.2 16.8L12.8 20H7.3ZM10.1 13.5C11.0667 13.5 11.8917 13.1583 12.575 12.475C13.2583 11.7917 13.6 10.9667 13.6 10C13.6 9.03333 13.2583 8.20833 12.575 7.525C11.8917 6.84167 11.0667 6.5 10.1 6.5C9.11667 6.5 8.2875 6.84167 7.6125 7.525C6.9375 8.20833 6.6 9.03333 6.6 10C6.6 10.9667 6.9375 11.7917 7.6125 12.475C8.2875 13.1583 9.11667 13.5 10.1 13.5Z" fill="currentColor"/>
         </svg>
         <span>Settings</span>
       </a>
     </nav>
 
-    <!-- Help Center -->
     <div class="help-center">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <path d="M9.95 16C10.3 16 10.5958 15.8792 10.8375 15.6375C11.0792 15.3958 11.2 15.1 11.2 14.75C11.2 14.4 11.0792 14.1042 10.8375 13.8625C10.5958 13.6208 10.3 13.5 9.95 13.5C9.6 13.5 9.30417 13.6208 9.0625 13.8625C8.82083 14.1042 8.7 14.4 8.7 14.75C8.7 15.1 8.82083 15.3958 9.0625 15.6375C9.30417 15.8792 9.6 16 9.95 16V16M9.05 12.15H10.9C10.9 11.6 10.9625 11.1667 11.0875 10.85C11.2125 10.5333 11.5667 10.1 12.15 9.55C12.5833 9.11667 12.925 8.70417 13.175 8.3125C13.425 7.92083 13.55 7.45 13.55 6.9C13.55 5.96667 13.2083 5.25 12.525 4.75C11.8417 4.25 11.0333 4 10.1 4C9.15 4 8.37917 4.25 7.7875 4.75C7.19583 5.25 6.78333 5.85 6.55 6.55L8.2 7.2C8.28333 6.9 8.47083 6.575 8.7625 6.225C9.05417 5.875 9.5 5.7 10.1 5.7C10.6333 5.7 11.0333 5.84583 11.3 6.1375C11.5667 6.42917 11.7 6.75 11.7 7.1C11.7 7.43333 11.6 7.74583 11.4 8.0375C11.2 8.32917 10.95 8.6 10.65 8.85C9.91667 9.5 9.46667 9.99167 9.3 10.325C9.13333 10.6583 9.05 11.2667 9.05 12.15V12.15M10 20C8.61667 20 7.31667 19.7375 6.1 19.2125C4.88333 18.6875 3.825 17.975 2.925 17.075C2.025 16.175 1.3125 15.1167 0.7875 13.9C0.2625 12.6833 0 11.3833 0 10C0 8.61667 0.2625 7.31667 0.7875 6.1C1.3125 4.88333 2.025 3.825 2.925 2.925C3.825 2.025 4.88333 1.3125 6.1 0.7875C7.31667 0.2625 8.61667 0 10 0C11.3833 0 12.6833 0.2625 13.9 0.7875C15.1167 1.3125 16.175 2.025 17.075 2.925C17.975 3.825 18.6875 4.88333 19.2125 6.1C19.7375 7.31667 20 8.61667 20 10C20 11.3833 19.7375 12.6833 19.2125 13.9C18.6875 15.1167 17.975 16.175 17.075 17.075C16.175 17.975 15.1167 18.6875 13.9 19.2125C12.6833 19.7375 11.3833 20 10 20V20M10 18C12.2333 18 14.125 17.225 15.675 15.675C17.225 14.125 18 12.2333 18 10C18 7.76667 17.225 5.875 15.675 4.325C14.125 2.775 12.2333 2 10 2C7.76667 2 5.875 2.775 4.325 4.325C2.775 5.875 2 7.76667 2 10C2 12.2333 2.775 14.125 4.325 15.675C5.875 17.225 7.76667 18 10 18V18" fill="#64748B"/>
+        <path d="M9.95 16C10.3 16 10.5958 15.8792 10.8375 15.6375C11.0792 15.3958 11.2 15.1 11.2 14.75C11.2 14.4 11.0792 14.1042 10.8375 13.8625C10.5958 13.6208 10.3 13.5 9.95 13.5C9.6 13.5 9.30417 13.6208 9.0625 13.8625C8.82083 14.1042 8.7 14.4 8.7 14.75C8.7 15.1 8.82083 15.3958 9.0625 15.6375C9.30417 15.8792 9.6 16 9.95 16ZM10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20Z" fill="#64748B"/>
       </svg>
       <span>Help Center</span>
     </div>
   </aside>
 
-  <!-- Main Content -->
+  <!-- ═══════════════ MAIN CONTENT ═══════════════════════════ -->
   <main class="main-content">
-    <!-- Top Header -->
+
+    <!-- Loading -->
+    @if (loadingState() === 'loading') {
+      <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <span>Loading dashboard…</span>
+      </div>
+    }
+
+    <!-- Error -->
+    @if (loadingState() === 'error') {
+      <div class="error-banner">
+        <span>{{ errorMessage() }}</span>
+        <button (click)="loadDashboard()">Retry</button>
+      </div>
+    }
+
+    @if (loadingState() === 'success') {
+
+    <!-- ── Top Header ──────────────────────────────────────── -->
     <header class="top-header">
       <div class="search-container">
         <svg class="search-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
           <path d="M12.5 11H11.71L11.43 10.73C12.41 9.59 13 8.11 13 6.5C13 2.91 10.09 0 6.5 0C2.91 0 0 2.91 0 6.5C0 10.09 2.91 13 6.5 13C8.11 13 9.59 12.41 10.73 11.43L11 11.71V12.5L16 17.49L17.49 16L12.5 11ZM6.5 11C4.01 11 2 8.99 2 6.5C2 4.01 4.01 2 6.5 2C8.99 2 11 4.01 11 6.5C11 8.99 8.99 11 6.5 11Z" fill="#6B7280"/>
         </svg>
-        <input type="text" class="search-input" placeholder="Search medicines, suppliers...">
+        <input type="text" class="search-input" placeholder="Search medicines, suppliers…">
       </div>
 
       <div class="header-right">
@@ -85,15 +110,16 @@
 
         <div class="divider"></div>
 
-        <!-- User Profile with Dropdown -->
-        <div class="user-info" (click)="toggleProfileDropdown()" #profileRef>
+        <div class="user-info" (click)="toggleProfileDropdown()">
           <div class="user-text">
-            <p class="user-name">{{ currentUser?.name || 'Staff Member' }}</p>
-            <p class="user-role">{{ currentUser?.role || 'Staff' }}</p>
+            <p class="user-name">{{ currentUser()?.name || 'Staff Member' }}</p>
+            <p class="user-role">{{ currentUser()?.role || 'Staff' }}</p>
           </div>
           <div class="user-avatar-wrapper">
             <div class="user-avatar"></div>
-            <svg class="dropdown-caret" [class.rotated]="isProfileDropdownOpen" width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <!-- FIX: Added explicit width/height to dropdown caret SVG -->
+            <svg class="dropdown-caret" [class.rotated]="isProfileDropdownOpen"
+              width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M2 4L6 8L10 4" stroke="#64748B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
@@ -103,27 +129,21 @@
             <div class="dropdown-header">
               <div class="dropdown-avatar"></div>
               <div class="dropdown-user-info">
-                <p class="dropdown-name">{{ currentUser?.name || 'Staff Member' }}</p>
-                <p class="dropdown-email">{{ currentUser?.email || 'staff@pharmalogix.com' }}</p>
+                <p class="dropdown-name">{{ currentUser()?.name || 'Staff Member' }}</p>
+                <p class="dropdown-email">{{ currentUser()?.email || 'staff@pharmalogix.com' }}</p>
               </div>
             </div>
             <div class="dropdown-divider"></div>
             <ul class="dropdown-menu">
               <li class="dropdown-item">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M8 8C9.06087 8 10.0783 7.57857 10.8284 6.82843C11.5786 6.07828 12 5.06087 12 4C12 2.93913 11.5786 1.92172 10.8284 1.17157C10.0783 0.421427 9.06087 0 8 0C6.93913 0 5.92172 0.421427 5.17157 1.17157C4.42143 1.92172 4 2.93913 4 4C4 5.06087 4.42143 6.07828 5.17157 6.82843C5.92172 7.57857 6.93913 8 8 8ZM8 2C8.53043 2 9.03914 2.21071 9.41421 2.58579C9.78929 2.96086 10 3.46957 10 4C10 4.53043 9.78929 5.03914 9.41421 5.41421C9.03914 5.78929 8.53043 6 8 6C7.46957 6 6.96086 5.78929 6.58579 5.41421C6.21071 5.03914 6 4.53043 6 4C6 3.46957 6.21071 2.96086 6.58579 2.58579C6.96086 2.21071 7.46957 2 8 2ZM8 9C5.33 9 0 10.34 0 13V14H16V13C16 10.34 10.67 9 8 9ZM2 12C2.22 11.28 5.31 11 8 11C10.69 11 13.78 11.28 14 12H2Z" fill="#64748B"/>
+                  <path d="M8 8C9.06087 8 10.0783 7.57857 10.8284 6.82843C11.5786 6.07828 12 5.06087 12 4C12 2.93913 11.5786 1.92172 10.8284 1.17157C10.0783 0.421427 9.06087 0 8 0C6.93913 0 5.92172 0.421427 5.17157 1.17157C4.42143 1.92172 4 2.93913 4 4C4 5.06087 4.42143 6.07828 5.17157 6.82843C5.92172 7.57857 6.93913 8 8 8ZM8 10C5.33 10 0 11.34 0 14V16H16V14C16 11.34 10.67 10 8 10Z" fill="#64748B"/>
                 </svg>
                 <span>My Profile</span>
               </li>
               <li class="dropdown-item">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M8.75 1C8.75 0.585786 8.41421 0.25 8 0.25C7.58579 0.25 7.25 0.585786 7.25 1V2.54982C5.28695 2.87664 3.75 4.59252 3.75 6.6875V9.5C3.75 10.8807 2.63071 12 1.25 12H14.75C13.3693 12 12.25 10.8807 12.25 9.5V6.6875C12.25 4.59252 10.7131 2.87664 8.75 2.54982V1ZM6 14C6 13.1716 6.67157 12.5 7.5 12.5H8.5C9.32843 12.5 10 13.1716 10 14C10 14.8284 9.32843 15.5 8.5 15.5H7.5C6.67157 15.5 6 14.8284 6 14Z" fill="#64748B"/>
-                </svg>
-                <span>Notifications</span>
-              </li>
-              <li class="dropdown-item">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M6.5 1C6.5 0.447715 6.94772 0 7.5 0H8.5C9.05228 0 9.5 0.447715 9.5 1V1.63328C10.2344 1.86117 10.9053 2.22169 11.4888 2.68936L12.0359 2.37114C12.5153 2.09716 13.125 2.26781 13.3989 2.74725L13.8989 3.61333C14.1729 4.09278 14.0022 4.70245 13.5228 4.97643L12.9862 5.28906C13.0609 5.68982 13.1 6.10329 13.1 6.52568C13.1 6.94807 13.0609 7.36154 12.9862 7.7623L13.5228 8.07493C14.0022 8.34891 14.1729 8.95858 13.8989 9.43803L13.3989 10.3041C13.125 10.7836 12.5153 10.9542 12.0359 10.6802L11.4888 10.362C10.9053 10.8297 10.2344 11.1902 9.5 11.4181V12.0513C9.5 12.6036 9.05228 13.0513 8.5 13.0513H7.5C6.94772 13.0513 6.5 12.6036 6.5 12.0513V11.4181C5.76561 11.1902 5.09473 10.8297 4.51116 10.362L3.96415 10.6802C3.48471 10.9542 2.87503 10.7836 2.60105 10.3041L2.10105 9.43803C1.82707 8.95858 1.99772 8.34891 2.47716 8.07493L3.01378 7.7623C2.93909 7.36154 2.9 6.94807 2.9 6.52568C2.9 6.10329 2.93909 5.68982 3.01378 5.28906L2.47716 4.97643C1.99772 4.70245 1.82707 4.09278 2.10105 3.61333L2.60105 2.74725C2.87503 2.26781 3.48471 2.09716 3.96415 2.37114L4.51116 2.68936C5.09473 2.22169 5.76561 1.86117 6.5 1.63328V1ZM8 8.52568C8.82843 8.52568 9.5 7.85411 9.5 7.02568C9.5 6.19725 8.82843 5.52568 8 5.52568C7.17157 5.52568 6.5 6.19725 6.5 7.02568C6.5 7.85411 7.17157 8.52568 8 8.52568Z" fill="#64748B"/>
+                  <path d="M8 0C3.58 0 0 3.58 0 8C0 12.42 3.58 16 8 16C12.42 16 16 12.42 16 8C16 3.58 12.42 0 8 0ZM9 12H7V7H9V12ZM9 5H7V3H9V5Z" fill="#64748B"/>
                 </svg>
                 <span>Account Settings</span>
               </li>
@@ -140,17 +160,18 @@
       </div>
     </header>
 
-    <!-- Greeting Section -->
+    <!-- ── Greeting ────────────────────────────────────────── -->
     <section class="greeting-section">
       <div class="greeting-left">
+        <!-- FIX: breadcrumb chevron now has explicit width="6" height="10" -->
         <div class="breadcrumb">
           <span class="breadcrumb-item">Home</span>
-          <svg viewBox="0 0 4 6" fill="none">
-            <path d="M1 1L3 3L1 5" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round"/>
+          <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
+            <path d="M1 1L5 5L1 9" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span class="breadcrumb-item active">Staff Dashboard</span>
         </div>
-        <h2 class="greeting-title">Good Morning, {{ currentUser?.name ? currentUser.name.split(' ')[0] : 'Staff' }} 👋</h2>
+        <h2 class="greeting-title">{{ greeting }}, {{ firstName() }} 👋</h2>
       </div>
       <div class="greeting-right">
         <button class="btn-secondary">
@@ -168,67 +189,120 @@
       </div>
     </section>
 
-    <!-- Stats Section -->
+    <!-- ── Stats Section ──────────────────────────────────── -->
     <section class="stats-section">
-      <div class="stat-card revenue">
-        <div class="stat-content">
-          <div class="stat-info">
-            <p class="stat-label">Total Revenue</p>
-            <h3 class="stat-value">$24,563</h3>
-            <div class="stat-trend">
-              <svg viewBox="0 0 11 7" fill="none"><path d="M1 6L5.5 1L10 6" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round"/></svg>
-              +12.5% this month
-            </div>
-          </div>
-          <div class="revenue-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <path d="M11 1C5.48 1 1 5.48 1 11C1 16.52 5.48 21 11 21C16.52 21 21 16.52 21 11C21 5.48 16.52 1 11 1ZM12 16H10V14H12V16ZM12 13H10C10 9.75 13 10.25 13 8C13 6.9 12.1 6 11 6C9.9 6 9 6.9 9 8H7C7 5.79 8.79 4 11 4C13.21 4 15 5.79 15 8C15 10.5 12 10.75 12 13Z" fill="white"/>
-            </svg>
-          </div>
-        </div>
-      </div>
 
-      <div class="stat-card">
-        <div class="stat-content">
-          <div class="stat-info">
-            <p class="stat-label">Prescriptions Today</p>
-            <h3 class="stat-value">142</h3>
-            <div class="stat-trend positive">
-              <svg viewBox="0 0 11 7" fill="none"><path d="M1 6L5.5 1L10 6" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round"/></svg>
-              +8.2% vs yesterday
+      <!-- Total Revenue card -->
+      @for (card of kpiCards(); track trackKpi($index, card)) {
+        @if (card.id === 'total-revenue') {
+          <div class="stat-card revenue">
+            <div class="stat-content">
+              <div class="stat-info">
+                <p class="stat-label">{{ card.label }}</p>
+                <h3 class="stat-value">{{ card.value }}</h3>
+                <div class="stat-trend positive-rev">
+                  <svg width="11" height="7" viewBox="0 0 11 7" fill="none">
+                    <path d="M1 6L5.5 1L10 6" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  {{ card.trendLabel }}
+                </div>
+              </div>
+              <div class="revenue-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                  <path d="M16 3C8.82 3 3 8.82 3 16C3 23.18 8.82 29 16 29C23.18 29 29 23.18 29 16C29 8.82 23.18 3 16 3ZM17 23H15V21H17V23ZM17 19H15C15 15.25 18.5 15.75 18.5 13C18.5 11.62 17.38 10.5 16 10.5C14.62 10.5 13.5 11.62 13.5 13H11.5C11.5 10.52 13.52 8.5 16 8.5C18.48 8.5 20.5 10.52 20.5 13C20.5 15.5 17 16 17 19Z" fill="rgba(255,255,255,0.9)"/>
+                </svg>
+              </div>
             </div>
           </div>
-          <div class="stat-icon">
-            <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
-              <rect width="42" height="42" rx="12" fill="#F0FDF4"/>
-              <path d="M21 11C15.48 11 11 15.48 11 21C11 26.52 15.48 31 21 31C26.52 31 31 26.52 31 21C31 15.48 26.52 11 21 11ZM24 22H22V24H20V22H18V20H20V18H22V20H24V22Z" fill="#16A34A"/>
-            </svg>
-          </div>
-        </div>
-      </div>
+        }
+      }
 
-      <div class="stat-card">
-        <div class="stat-content">
-          <div class="stat-info">
-            <p class="stat-label">Low Stock Alerts</p>
-            <h3 class="stat-value">7</h3>
-            <div class="stat-trend negative">
-              <svg viewBox="0 0 11 7" fill="none"><path d="M1 1L5.5 6L10 1" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round"/></svg>
-              3 critical items
+      <!-- Prescriptions Today -->
+      @for (card of kpiCards(); track card.id) {
+        @if (card.id === 'prescriptions') {
+          <div class="stat-card">
+            <div class="stat-content">
+              <div class="stat-info">
+                <p class="stat-label">{{ card.label }}</p>
+                <h3 class="stat-value">{{ card.value }}</h3>
+                <div class="stat-trend" [ngClass]="card.trend">
+                  <svg viewBox="0 0 11 7" width="11" height="7" fill="none">
+                    <path d="M1 6L5.5 1L10 6" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  {{ card.trendLabel }}
+                </div>
+              </div>
+              <div class="stat-icon">
+                <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+                  <rect width="42" height="42" rx="12" fill="#F0FDF4"/>
+                  <!-- Prescription/clipboard icon -->
+                  <path d="M27 12H15C13.9 12 13 12.9 13 14V28C13 29.1 13.9 30 15 30H27C28.1 30 29 29.1 29 28V14C29 12.9 28.1 12 27 12ZM27 28H15V14H27V28ZM17 22H25V24H17V22ZM17 18H25V20H17V18Z" fill="#16A34A"/>
+                </svg>
+              </div>
             </div>
           </div>
-          <div class="stat-icon alert">
-            <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
-              <rect width="42" height="42" rx="12" fill="#FEF2F2"/>
-              <path d="M21 13L11 30H31L21 13ZM21 27C20.45 27 20 26.55 20 26C20 25.45 20.45 25 21 25C21.55 25 22 25.45 22 26C22 26.55 21.55 27 21 27ZM20 24V20H22V24H20Z" fill="#EF4444"/>
-            </svg>
+        }
+      }
+
+      <!-- Medicines Added -->
+      @for (card of kpiCards(); track card.id) {
+        @if (card.id === 'medicines-added') {
+          <div class="stat-card">
+            <div class="stat-content">
+              <div class="stat-info">
+                <p class="stat-label">{{ card.label }}</p>
+                <h3 class="stat-value">{{ card.value }}</h3>
+                <div class="stat-trend" [ngClass]="card.trend">
+                  <svg viewBox="0 0 11 7" width="11" height="7" fill="none">
+                    <path d="M1 6L5.5 1L10 6" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  {{ card.trendLabel }}
+                </div>
+              </div>
+              <div class="stat-icon">
+                <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+                  <rect width="42" height="42" rx="12" fill="#F0FDF4"/>
+                  <!-- Plus/add medicine icon -->
+                  <path d="M21 11C15.48 11 11 15.48 11 21C11 26.52 15.48 31 21 31C26.52 31 31 26.52 31 21C31 15.48 26.52 11 21 11ZM25 22H22V25H20V22H17V20H20V17H22V20H25V22Z" fill="#16A34A"/>
+                </svg>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        }
+      }
+
+      <!-- Low Stock Alerts -->
+      @for (card of kpiCards(); track card.id) {
+        @if (card.id === 'low-stock') {
+          <div class="stat-card">
+            <div class="stat-content">
+              <div class="stat-info">
+                <p class="stat-label">{{ card.label }}</p>
+                <h3 class="stat-value">{{ card.value }}</h3>
+                <div class="stat-trend negative">
+                  <svg viewBox="0 0 11 7" width="11" height="7" fill="none">
+                    <path d="M1 1L5.5 6L10 1" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  {{ card.trendLabel }}
+                </div>
+              </div>
+              <div class="stat-icon alert">
+                <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+                  <rect width="42" height="42" rx="12" fill="#FEF2F2"/>
+                  <!-- Warning triangle icon -->
+                  <path d="M21 13L11 30H31L21 13ZM21 27C20.45 27 20 26.55 20 26C20 25.45 20.45 25 21 25C21.55 25 22 25.45 22 26C22 26.55 21.55 27 21 27ZM20 24V20H22V24H20Z" fill="#EF4444"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        }
+      }
+
     </section>
 
-    <!-- Charts Section -->
+    <!-- ── Charts ─────────────────────────────────────────── -->
     <section class="charts-section">
+      <!-- Sales bar chart -->
       <div class="chart-card">
         <div class="chart-header">
           <div>
@@ -243,15 +317,23 @@
           </div>
         </div>
         <div class="bar-chart">
-          <div class="bar-group" *ngFor="let bar of weeklyData">
-            <div class="bar" [style.height.px]="bar.height" [style.background]="bar.active ? '#14B8A5' : '#E2E8F0'" [class.active]="bar.active">
-              <div class="bar-tooltip" *ngIf="bar.active">${{ bar.value }}</div>
+          @for (bar of weeklyData(); track trackBar($index, bar)) {
+            <div class="bar-group">
+              <div class="bar"
+                [style.height.px]="bar.height"
+                [style.background]="bar.active ? '#14B8A5' : '#E2E8F0'"
+                [class.active]="bar.active">
+                @if (bar.active) {
+                  <div class="bar-tooltip">${{ bar.value }}</div>
+                }
+              </div>
+              <span class="bar-label">{{ bar.label }}</span>
             </div>
-            <span class="bar-label">{{ bar.label }}</span>
-          </div>
+          }
         </div>
       </div>
 
+      <!-- Inventory donut chart (dynamic) -->
       <div class="chart-card">
         <div class="chart-header">
           <div>
@@ -262,35 +344,45 @@
         <div class="donut-chart-container">
           <svg viewBox="0 0 120 120" class="donut-chart">
             <circle cx="60" cy="60" r="45" fill="none" stroke="#E2E8F0" stroke-width="18"/>
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#14B8A5" stroke-width="18" stroke-dasharray="169 113" stroke-dashoffset="0" stroke-linecap="round"/>
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#0EA5E9" stroke-width="18" stroke-dasharray="70 212" stroke-dashoffset="-169" stroke-linecap="round"/>
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#F59E0B" stroke-width="18" stroke-dasharray="44 238" stroke-dashoffset="-239" stroke-linecap="round"/>
-            <text x="60" y="56" text-anchor="middle" font-size="16" font-weight="700" fill="#0F172A">248</text>
+            <circle cx="60" cy="60" r="45" fill="none" stroke="#14B8A5" stroke-width="18"
+              [attr.stroke-dasharray]="donutSegments().inStock.array"
+              [attr.stroke-dashoffset]="donutSegments().inStock.offset"
+              stroke-linecap="round"/>
+            <circle cx="60" cy="60" r="45" fill="none" stroke="#0EA5E9" stroke-width="18"
+              [attr.stroke-dasharray]="donutSegments().lowStock.array"
+              [attr.stroke-dashoffset]="donutSegments().lowStock.offset"
+              stroke-linecap="round"/>
+            <circle cx="60" cy="60" r="45" fill="none" stroke="#F59E0B" stroke-width="18"
+              [attr.stroke-dasharray]="donutSegments().critical.array"
+              [attr.stroke-dashoffset]="donutSegments().critical.offset"
+              stroke-linecap="round"/>
+            <text x="60" y="56" text-anchor="middle" font-size="16" font-weight="700" fill="#0F172A">{{ inventoryStatus().total }}</text>
             <text x="60" y="70" text-anchor="middle" font-size="8" fill="#64748B">ITEMS</text>
           </svg>
           <div class="donut-legend">
             <div class="donut-legend-item">
               <span class="donut-dot" style="background:#14B8A5"></span>
               <span class="donut-label">In Stock</span>
-              <span class="donut-value">60%</span>
+              <span class="donut-value">{{ inventoryStatus().inStockPct }}%</span>
             </div>
             <div class="donut-legend-item">
               <span class="donut-dot" style="background:#0EA5E9"></span>
               <span class="donut-label">Low Stock</span>
-              <span class="donut-value">25%</span>
+              <span class="donut-value">{{ inventoryStatus().lowStockPct }}%</span>
             </div>
             <div class="donut-legend-item">
               <span class="donut-dot" style="background:#F59E0B"></span>
               <span class="donut-label">Critical</span>
-              <span class="donut-value">15%</span>
+              <span class="donut-value">{{ inventoryStatus().criticalPct }}%</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Bottom Section -->
+    <!-- ── Bottom Section ─────────────────────────────────── -->
     <section class="bottom-section">
+      <!-- Low Stock Alerts -->
       <div class="alerts-card">
         <div class="alerts-header">
           <h4>
@@ -302,50 +394,65 @@
           <a href="#" class="view-all">View all</a>
         </div>
         <div class="alert-list">
-          <div class="alert-item" *ngFor="let alert of stockAlerts">
-            <div class="alert-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <rect width="20" height="20" rx="6" fill="#F1F5F9"/>
-                <path d="M5.5 14.5H8.5V12H11V9H8.5V6.5H5.5V9H3V12H5.5V14.5Z" fill="#94A3B8"/>
-              </svg>
+          @if (stockAlerts().length === 0) {
+            <div class="empty-state">No alerts — inventory looks good ✅</div>
+          }
+          @for (alert of stockAlerts(); track trackAlert($index, alert)) {
+            <div class="alert-item">
+              <div class="alert-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect width="20" height="20" rx="6" fill="#F1F5F9"/>
+                  <path d="M5.5 14.5H8.5V12H11V9H8.5V6.5H5.5V9H3V12H5.5V14.5Z" fill="#94A3B8"/>
+                </svg>
+              </div>
+              <div class="alert-details">
+                <p class="alert-name">{{ alert.name }}</p>
+                <p class="alert-quantity">Quantity: <span>{{ alert.quantity }} units left</span></p>
+              </div>
+              <span class="alert-badge"
+                [class.high-demand]="alert.status === 'HIGH DEMAND'"
+                [class.steady]="alert.status === 'STEADY'">
+                {{ alert.status }}
+              </span>
+              <button class="restock-btn" (click)="requestRestock(alert.name)">Restock</button>
             </div>
-            <div class="alert-details">
-              <p class="alert-name">{{ alert.name }}</p>
-              <p class="alert-quantity">Quantity: <span>{{ alert.quantity }} units left</span></p>
-            </div>
-            <span class="alert-badge" [class.high-demand]="alert.status === 'HIGH DEMAND'" [class.steady]="alert.status === 'STEADY'">{{ alert.status }}</span>
-            <button class="restock-btn">Restock</button>
-          </div>
+          }
         </div>
       </div>
 
       <div class="right-column">
+        <!-- Top Searched -->
         <div class="searched-card">
           <div class="searched-header">
             <h4>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M1.4 12L0 10.6L7.4 3.15L11.4 7.15L16.6 2H14V0H20V6H18V3.4L11.4 10L7.4 6L1.4 12V12" fill="#14B8A5"/>
+              <svg width="16" height="16" viewBox="0 0 20 14" fill="none">
+                <path d="M1.4 14L0 12.6L7.4 5.15L11.4 9.15L18.6 2H16V0H20V4H18V1.4L11.4 8L7.4 4L1.4 10V14Z" fill="#14B8A5"/>
               </svg>
               Top Searched
             </h4>
           </div>
           <div class="searched-list">
-            <div class="searched-item" *ngFor="let item of topSearched; let i = index">
-              <span class="searched-number">{{ i + 1 }}.</span>
-              <span class="searched-name">{{ item.name }}</span>
-              <span class="searched-count">{{ item.count }} searches</span>
-            </div>
+            @for (item of topSearched(); track trackSearch($index, item); let i = $index) {
+              <div class="searched-item">
+                <span class="searched-number">{{ i + 1 }}.</span>
+                <span class="searched-name">{{ item.name }}</span>
+                <span class="searched-count">{{ item.count }} searches</span>
+              </div>
+            }
           </div>
         </div>
 
+        <!-- Store Location -->
         <div class="location-card">
           <h4>STORE LOCATION</h4>
-          <p class="location-address">Central Medical Plaza, NY</p>
+          <p class="location-address">{{ branchAddress() }}</p>
           <div class="map-placeholder">
             <div class="map-marker">📍</div>
           </div>
         </div>
       </div>
     </section>
+
+    } <!-- end @if success -->
   </main>
 </div>

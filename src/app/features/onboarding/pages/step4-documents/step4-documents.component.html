@@ -1,0 +1,63 @@
+<app-form-wrapper [currentStep]="4" title="Documents Upload" subtitle="Step 4 of 5">
+    <div class="grid">
+        <div class="uploads">
+            @for (slot of slots; track slot.key) {
+            <div class="slot">
+                <h4>{{ slot.label }}</h4>
+                <label
+                    class="dropzone"
+                    [class.dropzone--drag-over]="dragOverKey() === slot.key"
+                    [class.dropzone--has-file]="uploadedFor(slot.key)"
+                    (dragover)="onDragOver(slot.key, $event)"
+                    (dragleave)="onDragLeave($event)"
+                    (drop)="onDrop(slot, $event)"
+                >
+                    <input type="file" hidden accept=".pdf,.png,.jpg,.jpeg" (change)="onFile(slot, $event)" />
+                    @if (uploadedFor(slot.key)) {
+                        <span class="dropzone__icon">✅</span>
+                        <span class="dropzone__text">{{ uploadedFor(slot.key)!.fileName }}</span>
+                        <small class="dropzone__file-size">{{ formatSize(uploadedFor(slot.key)!.sizeBytes) }}</small>
+                    } @else {
+                        <span class="dropzone__icon">📄</span>
+                        <span class="dropzone__text">Click to upload or drag and drop</span>
+                        <small>{{ slot.hint }}</small>
+                    }
+                </label>
+                @if (hasError(slot.key)) {
+                    <div class="error-message" [class.error--type]="getError(slot.key)!.type === 'invalid-type'" [class.error--size]="getError(slot.key)!.type === 'size-exceeded'">
+                        <span class="error__icon">⚠️</span>
+                        <span class="error__text">{{ getError(slot.key)!.message }}</span>
+                    </div>
+                }
+            </div>
+            }
+        </div>
+
+        <aside class="uploaded">
+            <h4>Uploaded Documents ({{ documents().documents.length }})</h4>
+            @for (doc of documents().documents; track doc.key) {
+            <div class="file">
+                <div class="file__meta">
+                    <strong>{{ doc.fileName }}</strong>
+                    <small>{{ formatSize(doc.sizeBytes) }} • Uploaded</small>
+                </div>
+                <button type="button" class="icon-btn" (click)="removeDoc(doc.key)" aria-label="Remove">🗑️</button>
+            </div>
+            } @empty {
+            <p class="empty">No documents uploaded yet.</p>
+            }
+        </aside>
+    </div>
+
+    <p class="notice">
+        🛡️ All documents are encrypted using 256-bit AES protocols and stored in
+        HIPAA-compliant medical-grade servers.
+    </p>
+
+    <ng-container footer>
+        <button type="button" class="btn btn--ghost" (click)="onBack()">← Back</button>
+        <button type="button" class="btn btn--primary" (click)="onNext()">
+            Review Submission →
+        </button>
+    </ng-container>
+</app-form-wrapper>
