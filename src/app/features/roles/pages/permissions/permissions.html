@@ -1,0 +1,93 @@
+<section class="permissions-page">
+  <header class="page-header">
+    <h1>Permissions Management</h1>
+    <p>Configure and manage system-wide access controls, role assignments, and functional access across all modules.</p>
+  </header>
+
+  <article class="permissions-card">
+    <!-- <div class="tabs-row">
+      <button type="button" class="tab-btn active">Catalog</button>
+      <button type="button" class="tab-btn">Roles</button>
+      <button type="button" class="tab-btn">Audit Logs</button>
+    </div> -->
+
+    <div class="filters-row">
+      <div class="search-wrap">
+        <label for="permission-search">Search Permissions</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            id="permission-search"
+            pInputText
+            [ngModel]="searchTerm()"
+            (ngModelChange)="onSearchChange($event)"
+            placeholder="Search permissions by name or description..."
+          />
+        </span>
+      </div>
+
+      <div class="module-wrap">
+        <label for="module-filter">Filter by Module</label>
+        <p-select
+          inputId="module-filter"
+          [options]="moduleOptions()"
+          optionLabel="label"
+          optionValue="value"
+          [ngModel]="selectedModule()"
+          (ngModelChange)="onModuleChange($event)"
+          placeholder="All Modules"
+        ></p-select>
+      </div>
+
+      <p-button label="Create Permission" icon="pi pi-plus" styleClass="create-permission-btn"></p-button>
+    </div>
+
+    @if (error()) {
+      <div class="alert">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+      <div class="loading-state">
+        <p-progress-spinner strokeWidth="5" ariaLabel="Loading permissions"></p-progress-spinner>
+      </div>
+    } @else {
+      <p-table
+        [value]="filteredPermissions()"
+        styleClass="permissions-table"
+        [paginator]="true"
+        [rows]="7"
+        [rowsPerPageOptions]="[7, 14, 28]"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Permission Name</th>
+            <th>Module</th>
+            <th>Description</th>
+            <th class="actions-col">Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-permission>
+          <tr>
+            <td class="permission-name">{{ permission.permissionName }}</td>
+            <td>
+              <p-tag
+                [value]="permission.moduleLabel.toUpperCase()"
+                [severity]="getModuleSeverity(permission.moduleLabel)"
+              ></p-tag>
+            </td>
+            <td class="description-col">{{ permission.descriptionLabel }}</td>
+            <td class="actions-col">
+              <p-button icon="pi pi-pencil" [text]="true" severity="secondary"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="4" class="empty-state">No permissions found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <footer class="table-summary">{{ shownSummary() }}</footer>
+    }
+  </article>
+</section>

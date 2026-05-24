@@ -1,0 +1,72 @@
+<p-table
+    [value]="rows"
+    [loading]="isLoading && !rows.length"
+    styleClass="staff-table"
+    [tableStyle]="{ 'min-width': '52rem' }"
+>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Staff</th>
+            <th>Email</th>
+            <th>Branch roles</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+        <tr>
+            <td>
+                <div class="user-cell">
+                    <span class="user-dot"></span>
+                    <span>{{ getDisplayName(row) }}</span>
+                </div>
+            </td>
+            <td class="description">{{ row.user.email ?? '-' }}</td>
+            <td class="assignments-cell">
+                @if (row.assignments.length === 0) {
+                    <span class="none-label">No branch roles</span>
+                } @else {
+                    <div class="assignment-list">
+                        @for (assignment of row.assignments; track assignment.id) {
+                            <div class="assignment-chip">
+                                <p-tag [value]="getAssignmentLabel(assignment)" severity="secondary"></p-tag>
+                                <p-button
+                                    [rounded]="true"
+                                    [text]="true"
+                                    severity="secondary"
+                                    (onClick)="changeRole.emit({ row, assignment })"
+                                >
+                                    <hugeicons-icon [icon]="PencilEdit01Icon"></hugeicons-icon>
+                                </p-button>
+                            </div>
+                        }
+                    </div>
+                }
+            </td>
+            <td>
+                <p-button
+                    label="Assign branch"
+                    icon="pi pi-plus"
+                    size="small"
+                    [outlined]="true"
+                    (onClick)="assignBranch.emit(row)"
+                ></p-button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="4" class="state-row">No staff members found.</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<footer class="pagination-row">
+    <span>{{ rangeLabel }}</span>
+    <p-paginator
+        [first]="first"
+        [rows]="pageSize"
+        [totalRecords]="totalRecords"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        (onPageChange)="pageChange.emit($event)"
+    ></p-paginator>
+</footer>

@@ -1,0 +1,81 @@
+<section class="staff-details-page">
+  <header class="top-row">
+    <a routerLink="/staff" class="back-link">Back to staff</a>
+    <div class="actions">
+      <p-button
+        label="Assign Branch Role"
+        icon="pi pi-plus"
+        [disabled]="loading()"
+        (onClick)="openAssignModal()"
+      ></p-button>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="loading-wrap">
+      <p-progress-spinner strokeWidth="5" ariaLabel="Loading staff details"></p-progress-spinner>
+    </div>
+  } @else {
+    @if (error()) {
+      <div class="alert">{{ error() }}</div>
+    }
+
+    <header class="page-header">
+      <p class="eyebrow">Staff Member</p>
+      <h1>{{ getDisplayName() }}</h1>
+      <p>{{ user()?.email ?? 'No email on file' }}</p>
+    </header>
+
+    @if (actionError()) {
+      <div class="alert">{{ actionError() }}</div>
+    }
+    @if (actionSuccess()) {
+      <div class="success">{{ actionSuccess() }}</div>
+    }
+
+    <article class="assignments-card">
+      <div class="card-head">
+        <div>
+          <h2>Branch Role Assignments</h2>
+          <p>Roles this staff member holds at each pharmacy branch.</p>
+        </div>
+      </div>
+
+      <app-assignments-table
+        [assignments]="assignments()"
+        [isLoading]="loading()"
+        (changeRole)="openChangeModal($event)"
+        (revoke)="openRevokeModal($event)"
+      />
+    </article>
+  }
+</section>
+
+<app-assign-branch-role-modal
+  [visible]="isAssignModalVisible()"
+  [isSubmitting]="isSubmitting()"
+  [branches]="branches()"
+  [roles]="roles()"
+  [error]="actionError()"
+  (cancel)="closeAssignModal()"
+  (submitAssignment)="onAssign($event)"
+/>
+
+<app-change-role-modal
+  [visible]="isChangeModalVisible()"
+  [isSubmitting]="isSubmitting()"
+  [assignment]="selectedAssignment()"
+  [roles]="roles()"
+  [error]="actionError()"
+  (cancel)="closeChangeModal()"
+  (submitChange)="onChangeRole($event)"
+/>
+
+<app-revoke-assignment-modal
+  [visible]="isRevokeModalVisible()"
+  [isSubmitting]="isSubmitting()"
+  [assignment]="selectedAssignment()"
+  [error]="actionError()"
+  (cancel)="closeRevokeModal()"
+  (submitRevoke)="onRevoke($event)"
+/>

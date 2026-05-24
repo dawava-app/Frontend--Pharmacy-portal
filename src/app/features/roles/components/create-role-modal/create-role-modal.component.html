@@ -1,22 +1,24 @@
 <p-dialog
-    header="Create Role"
+    header="Create New Role"
     [modal]="true"
     [draggable]="false"
     [resizable]="false"
     [closable]="!isSubmitting"
     [visible]="visible"
-    [style]="{ width: '32rem' }"
+    [style]="{ width: '40rem' }"
     (onHide)="onHide()"
 >
     <div class="dialog-content">
+        <p class="subtitle">Define a new set of permissions for staff.</p>
+
         <div class="field">
-            <label for="roleName">Role name</label>
+            <label for="roleName">Role Name</label>
             <input
                 id="roleName"
                 pInputText
                 [ngModel]="roleName()"
                 (ngModelChange)="roleName.set($event)"
-                placeholder="Example: Inventory Supervisor"
+                placeholder="e.g. Quality Control Supervisor"
             />
         </div>
 
@@ -28,9 +30,60 @@
                 rows="4"
                 [ngModel]="roleDescription()"
                 (ngModelChange)="roleDescription.set($event)"
-                placeholder="Describe role access and responsibilities"
+                placeholder="Briefly describe the responsibilities of this role..."
             ></textarea>
         </div>
+
+        <div class="permissions-header">
+            <i class="pi pi-shield"></i>
+            <h3>Assign Permissions</h3>
+        </div>
+
+        @if (isPermissionsLoading) {
+            <div class="permissions-empty">Loading permissions...</div>
+        } @else if (!permissionGroups.length) {
+            <div class="permissions-empty">No permissions available.</div>
+        } @else {
+            <div class="permissions-groups">
+                @for (group of permissionGroups; track group.module) {
+                    <div class="module-card">
+                        <button type="button" class="module-header" (click)="toggleModule(group.module)">
+                            <div class="module-title-wrap">
+                                <strong>{{ group.module }}</strong>
+                                <small>{{ selectedCount(group) }}/{{ group.permissions.length }} selected</small>
+                            </div>
+                            <i class="pi" [class.pi-chevron-up]="isModuleExpanded(group.module)" [class.pi-chevron-down]="!isModuleExpanded(group.module)"></i>
+                        </button>
+
+                        @if (isModuleExpanded(group.module)) {
+                            <div class="module-content">
+                                <label class="check-row select-all">
+                                    <input
+                                        type="checkbox"
+                                        [checked]="isModuleFullySelected(group)"
+                                        (change)="onModuleSelectAll(group, $any($event.target).checked)"
+                                    />
+                                    <span>Select All</span>
+                                </label>
+
+                                <div class="permissions-grid">
+                                    @for (permission of group.permissions; track permission.id) {
+                                        <label class="check-row">
+                                            <input
+                                                type="checkbox"
+                                                [checked]="isPermissionSelected(permission.id)"
+                                                (change)="onPermissionToggle(permission.id, $any($event.target).checked)"
+                                            />
+                                            <span>{{ formatPermissionLabel(permission.name) }}</span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
 
         @if (error) {
             <div class="error">{{ error }}</div>
@@ -47,7 +100,7 @@
                 (onClick)="onHide()"
             />
             <p-button
-                label="Create Role"
+                label="Save Role"
                 [loading]="isSubmitting"
                 [disabled]="!roleName().trim() || !roleDescription().trim()"
                 (onClick)="onSubmit()"

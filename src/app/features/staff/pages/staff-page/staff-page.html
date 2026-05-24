@@ -1,0 +1,64 @@
+<section class="staff-page">
+    <header class="top-bar">
+        <input
+            pInputText
+            #searchInput
+            type="text"
+            placeholder="Search staff by name or email..."
+            class="search-input"
+            (input)="onSearch(searchInput.value)"
+        />
+        <div class="top-actions">
+            <p-button icon="pi pi-bell" [rounded]="true" [text]="true" severity="secondary"></p-button>
+            <p-button icon="pi pi-question-circle" [rounded]="true" [text]="true" severity="secondary"></p-button>
+        </div>
+    </header>
+
+    <div class="staff-card">
+        <div class="title-row">
+            <div>
+                <h1>Manage Staff</h1>
+                <p>Assign branch roles and update roles per staff member.</p>
+            </div>
+        </div>
+
+        @if (error()) {
+            <div class="alert">{{ error() }}</div>
+        }
+        @if (actionSuccess()) {
+            <div class="success">{{ actionSuccess() }}</div>
+        }
+
+        <app-staff-table
+            [rows]="pagedRows()"
+            [isLoading]="isLoading()"
+            [first]="first()"
+            [pageSize]="pageSize()"
+            [totalRecords]="filteredRows().length"
+            [rangeLabel]="rangeLabel()"
+            (pageChange)="onPageChange($event)"
+            (assignBranch)="openAssignModal($event)"
+            (changeRole)="openChangeModal($event)"
+        />
+    </div>
+</section>
+
+<app-assign-branch-role-modal
+    [visible]="isAssignModalVisible()"
+    [isSubmitting]="isSubmitting()"
+    [branches]="branches()"
+    [roles]="roles()"
+    [error]="actionError()"
+    (cancel)="closeAssignModal()"
+    (submitAssignment)="onAssign($event)"
+/>
+
+<app-change-role-modal
+    [visible]="isChangeModalVisible()"
+    [isSubmitting]="isSubmitting()"
+    [assignment]="selectedAssignment()"
+    [roles]="roles()"
+    [error]="actionError()"
+    (cancel)="closeChangeModal()"
+    (submitChange)="onChangeRole($event)"
+/>
