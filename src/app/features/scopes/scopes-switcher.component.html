@@ -1,0 +1,30 @@
+<section class="scope-switcher">
+  <div class="scope-switcher__header">
+    <p class="scope-switcher__eyebrow">Active scope</p>
+    <h4>Branch access</h4>
+  </div>
+
+  <label class="scope-switcher__field">
+    <span>Switch branch</span>
+    <select
+      [value]="selectedBranchId()"
+      [disabled]="isLoading() || isSwitching() || scopes().length < 2"
+      (change)="onBranchChange(branchSelect.value)"
+      #branchSelect
+    >
+      <option value="" disabled>
+        {{ isLoading() ? 'Loading branches...' : 'Select branch' }}
+      </option>
+      <option *ngFor="let scope of scopes(); trackBy: trackByBranchId" [value]="scope.branchId">
+        {{ scopeLabel(scope) }}{{ scope.isCurrent ? ' (current)' : '' }}
+      </option>
+    </select>
+  </label>
+
+  <p class="scope-switcher__meta" *ngIf="currentScope() as current">Current: {{ scopeLabel(current) }}</p>
+  <p class="scope-switcher__meta" *ngIf="currentScope() as current">Branch ID: {{ current.branchId }}</p>
+  <p class="scope-switcher__error" *ngIf="error()">{{ error() }}</p>
+  <p class="scope-switcher__hint" *ngIf="!isLoading() && scopes().length === 0">
+    No branch scopes are available for this account.
+  </p>
+</section>

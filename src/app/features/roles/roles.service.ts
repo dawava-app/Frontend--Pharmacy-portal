@@ -115,7 +115,33 @@ export class RolesService {
 
   getRoles(includeInactive = false): Observable<Role[]> {
     const params = new HttpParams().set('includeInactive', includeInactive);
-    return this.http.get<Role[]>(`${this.apiBase}/admin/roles`, { params });
+    return this.http
+      .get<Role[] | ApiCollectionResponse<Role>>(`${this.apiBase}/admin/roles`, { params })
+      .pipe(
+        map((response) => {
+          if (Array.isArray(response)) {
+            return response;
+          }
+
+          if (!response || typeof response !== 'object') {
+            return [];
+          }
+
+          if (Array.isArray(response.data)) {
+            return response.data;
+          }
+
+          if (Array.isArray(response.items)) {
+            return response.items;
+          }
+
+          if (Array.isArray(response.result)) {
+            return response.result;
+          }
+
+          return [];
+        })
+      );
   }
 
   getRoleById(roleId: RoleId): Observable<Role> {
