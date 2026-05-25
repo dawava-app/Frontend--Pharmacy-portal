@@ -13,6 +13,12 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+  path: 'onboarding',
+  loadChildren: () =>
+    import('./features/onboarding/onboarding.routes').then(m => m.ONBOARDING_ROUTES),
+}
+,
   ...mainRoutes,
   { path: '**', redirectTo: 'login' },
 ];

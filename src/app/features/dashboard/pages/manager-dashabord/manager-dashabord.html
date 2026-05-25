@@ -1,1 +1,484 @@
-<p>manager-dashabord works!</p>
+<!-- ============================================================
+     Manager Dashboard Template — FIXED
+     Path: src/app/features/dashboard/pages/manager-dashabord/manager-dashabord.html
+     Changes:
+       - Added sidebar (self-contained layout like staff dashboard)
+       - Fixed KPI card icons (proper SVGs per card type)
+       - Fixed card-overlay-circle positioning
+     ============================================================ -->
+
+<div class="dashboard-shell">
+
+  <!-- ═══════════════════════════════════════════════════════
+       SIDEBAR
+       ═══════════════════════════════════════════════════════ -->
+  <aside class="sidebar">
+    <!-- Logo -->
+    <div class="logo-section">
+      <div class="logo-icon">
+        <svg width="34" height="36" viewBox="0 0 34 36" fill="none">
+          <rect width="34" height="36" rx="12" fill="#14B8A5"/>
+          <path d="M8 28V26L10 20L8 14V12H20.7L22.15 8L24.5 8.85L23.35 12H26V14L24 20L26 26V28H8V28M16 24H18V21H21V19H18V16H16V19H13V21H16V24V24M10.1 26H23.9L21.9 20L23.9 14H10.1L12.1 20L10.1 26V26" fill="white"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <h1 class="logo-title">PharmaLogix</h1>
+        <p class="logo-subtitle">Management System</p>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-link active">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M10 6V0H18V6H10V6M0 10V0H8V10H0V10M10 18V8H18V18H10V18M0 18V12H8V18H0V18M2 8H6V2H2V8V8M12 16H16V10H12V16V16M12 4H16V2H12V4V4M2 16H6V14H2V16V16" fill="currentColor"/>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-link">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 20C2.45 20 1.97917 19.8042 1.5875 19.4125C1.19583 19.0208 1 18.55 1 18V6.725C0.7 6.54167 0.458333 6.30417 0.275 6.0125C0.0916667 5.72083 0 5.38333 0 5V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V5C20 5.38333 19.9083 5.72083 19.725 6.0125C19.5417 6.30417 19.3 6.54167 19 6.725V18C19 18.55 18.8042 19.0208 18.4125 19.4125C18.0208 19.8042 17.55 20 17 20H3ZM3 7V18H17V7H3ZM2 5H18V2H2V5ZM7 12H13V10H7V12Z" fill="currentColor"/>
+        </svg>
+        <span>Inventory</span>
+      </a>
+      <a href="#" class="nav-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M12 16V9H16V16H12ZM6 16V0H10V16H6ZM0 16V5H4V16H0Z" fill="currentColor"/>
+        </svg>
+        <span>Reports</span>
+      </a>
+      <a href="#" class="nav-link">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V9H11V15ZM11 7H9V5H11V7Z" fill="currentColor"/>
+        </svg>
+        <span>Staff</span>
+      </a>
+      <a href="#" class="nav-link">
+        <svg width="20" height="20" viewBox="0 0 20.1 20" fill="none">
+          <path d="M7.3 20L6.9 16.8C6.68333 16.7167 6.47917 16.6167 6.2875 16.5C6.09583 16.3833 5.90833 16.2583 5.725 16.125L2.75 17.375L0 12.625L2.575 10.675C2.55833 10.5583 2.55 10.4458 2.55 10.3375C2.55 10.2292 2.55 10.1167 2.55 10C2.55 9.88333 2.55 9.77083 2.55 9.6625C2.55 9.55417 2.55833 9.44167 2.575 9.325L0 7.375L2.75 2.625L5.725 3.875C5.90833 3.74167 6.1 3.61667 6.3 3.5C6.5 3.38333 6.7 3.28333 6.9 3.2L7.3 0H12.8L13.2 3.2C13.4167 3.28333 13.6208 3.38333 13.8125 3.5C14.0042 3.61667 14.1917 3.74167 14.375 3.875L17.35 2.625L20.1 7.375L17.525 9.325C17.5417 9.44167 17.55 9.55417 17.55 9.6625C17.55 9.77083 17.55 9.88333 17.55 10C17.55 10.1167 17.55 10.2292 17.55 10.3375C17.55 10.4458 17.5333 10.5583 17.5 10.675L20.075 12.625L17.325 17.375L14.375 16.125C14.1917 16.2583 14 16.3833 13.8 16.5C13.6 16.6167 13.4 16.7167 13.2 16.8L12.8 20H7.3ZM10.1 13.5C11.0667 13.5 11.8917 13.1583 12.575 12.475C13.2583 11.7917 13.6 10.9667 13.6 10C13.6 9.03333 13.2583 8.20833 12.575 7.525C11.8917 6.84167 11.0667 6.5 10.1 6.5C9.11667 6.5 8.2875 6.84167 7.6125 7.525C6.9375 8.20833 6.6 9.03333 6.6 10C6.6 10.9667 6.9375 11.7917 7.6125 12.475C8.2875 13.1583 9.11667 13.5 10.1 13.5Z" fill="currentColor"/>
+        </svg>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <!-- Help Center -->
+    <div class="sidebar-help">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+        <path d="M9.95 16C10.3 16 10.5958 15.8792 10.8375 15.6375C11.0792 15.3958 11.2 15.1 11.2 14.75C11.2 14.4 11.0792 14.1042 10.8375 13.8625C10.5958 13.6208 10.3 13.5 9.95 13.5C9.6 13.5 9.30417 13.6208 9.0625 13.8625C8.82083 14.1042 8.7 14.4 8.7 14.75C8.7 15.1 8.82083 15.3958 9.0625 15.6375C9.30417 15.8792 9.6 16 9.95 16ZM9.05 12.15H10.9C10.9 11.6 10.9625 11.1667 11.0875 10.85C11.2125 10.5333 11.5667 10.1 12.15 9.55C12.5833 9.11667 12.925 8.70417 13.175 8.3125C13.425 7.92083 13.55 7.45 13.55 6.9C13.55 5.96667 13.2083 5.25 12.525 4.75C11.8417 4.25 11.0333 4 10.1 4C9.15 4 8.37917 4.25 7.7875 4.75C7.19583 5.25 6.78333 5.85 6.55 6.55L8.2 7.2C8.28333 6.9 8.47083 6.575 8.7625 6.225C9.05417 5.875 9.5 5.7 10.1 5.7C10.6333 5.7 11.0333 5.84583 11.3 6.1375C11.5667 6.42917 11.7 6.75 11.7 7.1C11.7 7.43333 11.6 7.74583 11.4 8.0375C11.2 8.32917 10.95 8.6 10.65 8.85C9.91667 9.5 9.46667 9.99167 9.3 10.325C9.13333 10.6583 9.05 11.2667 9.05 12.15ZM10 20C8.61667 20 7.31667 19.7375 6.1 19.2125C4.88333 18.6875 3.825 17.975 2.925 17.075C2.025 16.175 1.3125 15.1167 0.7875 13.9C0.2625 12.6833 0 11.3833 0 10C0 8.61667 0.2625 7.31667 0.7875 6.1C1.3125 4.88333 2.025 3.825 2.925 2.925C3.825 2.025 4.88333 1.3125 6.1 0.7875C7.31667 0.2625 8.61667 0 10 0C11.3833 0 12.6833 0.2625 13.9 0.7875C15.1167 1.3125 16.175 2.025 17.075 2.925C17.975 3.825 18.6875 4.88333 19.2125 6.1C19.7375 7.31667 20 8.61667 20 10C20 11.3833 19.7375 12.6833 19.2125 13.9C18.6875 15.1167 17.975 16.175 17.075 17.075C16.175 17.975 15.1167 18.6875 13.9 19.2125C12.6833 19.7375 11.3833 20 10 20Z" fill="#64748B"/>
+      </svg>
+      <span>Help Center</span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════════════════ -->
+  <main class="main-content">
+
+    <!-- ── Loading State ─────────────────────────────────── -->
+    @if (loadingState() === 'loading') {
+      <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <span>Loading dashboard…</span>
+      </div>
+    }
+
+    <!-- ── Error State ────────────────────────────────────── -->
+    @if (loadingState() === 'error') {
+      <div class="error-banner">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 0C3.58 0 0 3.58 0 8C0 12.42 3.58 16 8 16C12.42 16 16 12.42 16 8C16 3.58 12.42 0 8 0ZM9 12H7V7H9V12ZM9 5H7V3H9V5Z" fill="#DC2626"/>
+        </svg>
+        <span>{{ errorMessage() }}</span>
+        <button (click)="loadDashboard()">Retry</button>
+      </div>
+    }
+
+    @if (loadingState() === 'success') {
+
+    <!-- ── Top Bar ─────────────────────────────────────────── -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button class="mobile-menu-btn" (click)="toggleMobileMenu()">
+          <svg width="22" height="16" viewBox="0 0 22 16" fill="none">
+            <rect width="22" height="2" rx="1" fill="#475569"/>
+            <rect y="7" width="16" height="2" rx="1" fill="#475569"/>
+            <rect y="14" width="22" height="2" rx="1" fill="#475569"/>
+          </svg>
+        </button>
+        <div class="breadcrumb">
+          <span class="breadcrumb-item">{{ currentBranch().name }}</span>
+          <span class="breadcrumb-sep">•</span>
+          <span class="breadcrumb-item active">MANAGER DASHBOARD</span>
+        </div>
+      </div>
+
+      <div class="top-bar-right">
+        <!-- Branch Switcher -->
+        <div class="branch-dropdown" [class.open]="branchDropdownOpen()" #branchDropdownRef>
+          <button class="branch-btn" (click)="toggleBranchDropdown()">
+            <div class="branch-dot"></div>
+            <span>{{ currentBranch().name }}</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" [class.rotated]="branchDropdownOpen()">
+              <path d="M4 6L8 10L12 6" stroke="#64748B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          @if (branchDropdownOpen()) {
+            <div class="branch-menu" [@dropdownAnim]>
+              <div class="branch-menu-header">Switch Branch</div>
+              @for (branch of branches(); track trackBranch($index, branch)) {
+                <button class="branch-option" [class.active]="branch.id === currentBranch().id"
+                  (click)="selectBranch(branch)">
+                  <div class="branch-dot" [class.active]="branch.id === currentBranch().id"></div>
+                  <div>
+                    <div class="branch-opt-name">{{ branch.name }}</div>
+                    <div class="branch-opt-loc">{{ branch.location }}</div>
+                  </div>
+                  @if (branch.id === currentBranch().id) {
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path d="M2 7L6 11L12 3" stroke="#14B8A5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  }
+                </button>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Notifications -->
+        <button class="icon-btn" aria-label="Notifications">
+          <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
+            <path d="M0 17V15H2V8C2 6.61667 2.41667 5.3875 3.25 4.3125C4.08333 3.2375 5.16667 2.53333 6.5 2.2V1.5C6.5 1.08333 6.64583 0.729167 6.9375 0.4375C7.22917 0.145833 7.58333 0 8 0C8.41667 0 8.77083 0.145833 9.0625 0.4375C9.35417 0.729167 9.5 1.08333 9.5 1.5V2.2C10.8333 2.53333 11.9167 3.2375 12.75 4.3125C13.5833 5.3875 14 6.61667 14 8V15H16V17H0ZM8 20C7.45 20 6.97917 19.8042 6.5875 19.4125C6.19583 19.0208 6 18.55 6 18H10C10 18.55 9.80417 19.0208 9.4125 19.4125C9.02083 19.8042 8.55 20 8 20ZM4 15H12V8C12 6.9 11.6083 5.95833 10.825 5.175C10.0417 4.39167 9.1 4 8 4C6.9 4 5.95833 4.39167 5.175 5.175C4.39167 5.95833 4 6.9 4 8V15Z" fill="#64748B"/>
+          </svg>
+        </button>
+
+        <!-- User Menu -->
+        <div class="user-menu-wrapper" [class.open]="userMenuOpen()" #userMenuRef>
+          <button class="user-btn" (click)="toggleUserMenu()">
+            <div class="user-text">
+              <div class="user-name">{{ currentUser()?.name ?? '—' }}</div>
+              <div class="user-role">{{ currentUser()?.role ?? '—' }}</div>
+            </div>
+            <div class="user-avatar">
+              @if (currentUser()?.avatarUrl) {
+                <img [src]="currentUser()!.avatarUrl" [alt]="currentUser()!.name"/>
+              } @else {
+                <span class="avatar-initial">{{ currentUser()?.name?.[0] ?? 'M' }}</span>
+              }
+            </div>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" [class.rotated]="userMenuOpen()">
+              <path d="M3 5L7 9L11 5" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          @if (userMenuOpen()) {
+            <div class="user-dropdown" [@dropdownAnim]>
+              <div class="user-dropdown-header">
+                <div class="user-avatar large">
+                  @if (currentUser()?.avatarUrl) {
+                    <img [src]="currentUser()!.avatarUrl" [alt]="currentUser()!.name"/>
+                  } @else {
+                    <span class="avatar-initial">{{ currentUser()?.name?.[0] ?? 'M' }}</span>
+                  }
+                </div>
+                <div>
+                  <div class="user-dropdown-name">{{ currentUser()?.name }}</div>
+                  <div class="user-dropdown-role">{{ currentUser()?.role }}</div>
+                </div>
+              </div>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 8C9.06087 8 10.0783 7.57857 10.8284 6.82843C11.5786 6.07828 12 5.06087 12 4C12 2.93913 11.5786 1.92172 10.8284 1.17157C10.0783 0.421427 9.06087 0 8 0C6.93913 0 5.92172 0.421427 5.17157 1.17157C4.42143 1.92172 4 2.93913 4 4C4 5.06087 4.42143 6.07828 5.17157 6.82843C5.92172 7.57857 6.93913 8 8 8ZM8 10C5.33 10 0 11.34 0 14V16H16V14C16 11.34 10.67 10 8 10Z" fill="#64748B"/>
+                </svg>
+                <span>My Profile</span>
+              </button>
+              <button class="dropdown-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 0C3.58 0 0 3.58 0 8C0 12.42 3.58 16 8 16C12.42 16 16 12.42 16 8C16 3.58 12.42 0 8 0ZM9 12H7V7H9V12ZM9 5H7V3H9V5Z" fill="#64748B"/>
+                </svg>
+                <span>Settings</span>
+              </button>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item logout" (click)="logout()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H8V2H2V14H8V16H2ZM12 12L10.6 10.55L13.15 8H5V6H13.15L10.6 3.45L12 2L16 6L12 10V12Z" fill="#DC2626"/>
+                </svg>
+                <span>Logout</span>
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+    </header>
+
+    <!-- ── KPI Cards ──────────────────────────────────────── -->
+    <div class="kpi-grid">
+
+      <!-- Total Medicines -->
+      <div class="kpi-card" [@cardAnim]>
+        <div class="kpi-icon teal">
+          <svg width="22" height="22" viewBox="0 0 22.5 22.5" fill="none">
+            <path d="M7.03125 22.5C5.07292 22.5 3.41146 21.8177 2.04688 20.4531C0.682292 19.0885 0 17.4271 0 15.4688C0 14.5312 0.177083 13.6354 0.53125 12.7812C0.885417 11.9271 1.39583 11.1667 2.0625 10.5L10.5 2.0625C11.1667 1.39583 11.9271 0.885417 12.7812 0.53125C13.6354 0.177083 14.5312 0 15.4688 0C17.4271 0 19.0885 0.682292 20.4531 2.04688C21.8177 3.41146 22.5 5.07292 22.5 7.03125C22.5 7.96875 22.3229 8.86458 21.9688 9.71875C21.6146 10.5729 21.1042 11.3333 20.4375 12L12 20.4375C11.3333 21.1042 10.5729 21.6146 9.71875 21.9688C8.86458 22.3229 7.96875 22.5 7.03125 22.5ZM15.3438 13.5625L18.6875 10.25C19.1042 9.83333 19.4271 9.34375 19.6562 8.78125C19.8854 8.21875 20 7.63542 20 7.03125C20 5.78125 19.5573 4.71354 18.6719 3.82812C17.7865 2.94271 16.7188 2.5 15.4688 2.5C14.8646 2.5 14.2812 2.61458 13.7188 2.84375C13.1562 3.07292 12.6667 3.39583 12.25 3.8125L8.9375 7.15625L15.3438 13.5625ZM7.03125 20C7.63542 20 8.21875 19.8854 8.78125 19.6562C9.34375 19.4271 9.83333 19.1042 10.25 18.6875L13.5625 15.3438L7.15625 8.9375L3.8125 12.25C3.39583 12.6667 3.07292 13.1562 2.84375 13.7188C2.61458 14.2812 2.5 14.8646 2.5 15.4688C2.5 16.7188 2.94271 17.7865 3.82812 18.6719C4.71354 19.5573 5.78125 20 7.03125 20Z" fill="#14B8A5"/>
+          </svg>
+        </div>
+        <div class="kpi-body">
+          @for (card of kpiCards(); track card.id) {
+            @if (card.id === 'total-medicines') {
+              <div class="kpi-label">{{ card.label }}</div>
+              <div class="kpi-value">{{ card.value }}</div>
+              <div class="kpi-trend positive">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                  <path d="M0.7 6L0 5.3L3.7 1.575L5.7 3.575L8.3 1H7V0H10V3H9V1.7L5.7 5L3.7 3L0.7 6Z" fill="#059669"/>
+                </svg>
+                {{ card.changeLabel }}
+              </div>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Out of Stock -->
+      <div class="kpi-card alert" [@cardAnim]>
+        <div class="kpi-icon red">
+          <svg width="24" height="24" viewBox="0 0 25 25" fill="none">
+            <path d="M3.75 25C3.0625 25 2.47396 24.7552 1.98438 24.2656C1.49479 23.776 1.25 23.1875 1.25 22.5V8.40625C0.875 8.17708 0.572917 7.88021 0.34375 7.51562C0.114583 7.15104 0 6.72917 0 6.25V2.5C0 1.8125 0.244792 1.22396 0.734375 0.734375C1.22396 0.244792 1.8125 0 2.5 0H22.5C23.1875 0 23.776 0.244792 24.2656 0.734375C24.7552 1.22396 25 1.8125 25 2.5V6.25C25 6.72917 24.8854 7.15104 24.6562 7.51562C24.4271 7.88021 24.125 8.17708 23.75 8.40625V22.5C23.75 23.1875 23.5052 23.776 23.0156 24.2656C22.526 24.7552 21.9375 25 21.25 25H3.75ZM3.75 8.75V22.5H21.25V8.75H3.75ZM2.5 6.25H22.5V2.5H2.5V6.25ZM8.75 15H16.25V12.5H8.75V15Z" fill="#DC2626"/>
+          </svg>
+        </div>
+        <div class="kpi-body">
+          @for (card of kpiCards(); track card.id) {
+            @if (card.id === 'out-of-stock') {
+              <div class="kpi-label">{{ card.label }}</div>
+              <div class="kpi-value">{{ card.value }}</div>
+              <div class="kpi-badge">{{ card.badge }}</div>
+            }
+          }
+        </div>
+        <div class="kpi-bg-circle"></div>
+      </div>
+
+      <!-- Daily Revenue -->
+      <div class="kpi-card" [@cardAnim]>
+        <div class="kpi-icon teal">
+          <svg width="26" height="20" viewBox="0 0 27.5 20" fill="none">
+            <path d="M16.25 11.25C15.2083 11.25 14.3229 10.8854 13.5938 10.1562C12.8646 9.42708 12.5 8.54167 12.5 7.5C12.5 6.45833 12.8646 5.57292 13.5938 4.84375C14.3229 4.11458 15.2083 3.75 16.25 3.75C17.2917 3.75 18.1771 4.11458 18.9062 4.84375C19.6354 5.57292 20 6.45833 20 7.5C20 8.54167 19.6354 9.42708 18.9062 10.1562C18.1771 10.8854 17.2917 11.25 16.25 11.25ZM7.5 15C6.8125 15 6.22396 14.7552 5.73438 14.2656C5.24479 13.776 5 13.1875 5 12.5V2.5C5 1.8125 5.24479 1.22396 5.73438 0.734375C6.22396 0.244792 6.8125 0 7.5 0H25C25.6875 0 26.276 0.244792 26.7656 0.734375C27.2552 1.22396 27.5 1.8125 27.5 2.5V12.5C27.5 13.1875 27.2552 13.776 26.7656 14.2656C26.276 14.7552 25.6875 15 25 15H7.5ZM10 12.5H22.5C22.5 11.8125 22.7448 11.224 23.2344 10.7344C23.724 10.2448 24.3125 10 25 10V5C24.3125 5 23.724 4.75521 23.2344 4.26562C22.7448 3.77604 22.5 3.1875 22.5 2.5H10C10 3.1875 9.75521 3.77604 9.26562 4.26562C8.77604 4.75521 8.1875 5 7.5 5V10C8.1875 10 8.77604 10.2448 9.26562 10.7344C9.75521 11.224 10 11.8125 10 12.5ZM23.75 20H2.5C1.8125 20 1.22396 19.7552 0.734375 19.2656C0.244792 18.776 0 18.1875 0 17.5V3.75H2.5V17.5H23.75V20Z" fill="#14B8A5"/>
+          </svg>
+        </div>
+        <div class="kpi-body">
+          @for (card of kpiCards(); track card.id) {
+            @if (card.id === 'daily-revenue') {
+              <div class="kpi-label">{{ card.label }}</div>
+              <div class="kpi-value">{{ card.value }}</div>
+              <div class="kpi-trend positive">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                  <path d="M0.7 6L0 5.3L3.7 1.575L5.7 3.575L8.3 1H7V0H10V3H9V1.7L5.7 5L3.7 3L0.7 6Z" fill="#059669"/>
+                </svg>
+                {{ card.changeLabel }}
+              </div>
+            }
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Charts ─────────────────────────────────────────── -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h4>Stock Trends</h4>
+          <div class="chart-period">
+            <span>Last 7 Days</span>
+            <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+              <path d="M5.4 7.2L9 10.8L12.6 7.2" stroke="#6B7280" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="chart-body">
+          <svg class="line-svg" viewBox="0 0 548 192" fill="none" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#14B8A5" stop-opacity="0.15"/>
+                <stop offset="100%" stop-color="#14B8A5" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 128C45.6667 59.7333 91.3333 51.2 137 102.4C182.667 153.6 228.333 145.067 274 76.8C319.667 8.53334 365.333 34.1333 411 153.6C456.667 273.067 502.333 238.933 548 51.2"
+              stroke="#14B8A5" stroke-width="3" fill="none"/>
+            <path d="M0 128C45.6667 59.7333 91.3333 51.2 137 102.4C182.667 153.6 228.333 145.067 274 76.8C319.667 8.53334 365.333 34.1333 411 153.6C456.667 273.067 502.333 238.933 548 51.2 L548 192 L0 192 Z"
+              fill="url(#lineGrad)"/>
+          </svg>
+          <div class="chart-x-labels">
+            @for (point of salesData(); track point.label) {
+              <span>{{ point.label }}</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-header">
+          <h4>Sales Trends</h4>
+          <div class="chart-legend">
+            <span class="legend-dot"></span>
+            <span>Revenue</span>
+          </div>
+        </div>
+        <div class="chart-body bar-chart">
+          <div class="bars-row">
+            @for (point of salesData(); track point.label) {
+              <div class="bar" [style.height]="barHeight(point.value)"></div>
+            }
+          </div>
+          <div class="chart-x-labels">
+            @for (point of salesData(); track point.label) {
+              <span>{{ point.label }}</span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Bottom Row ─────────────────────────────────────── -->
+    <div class="bottom-row">
+
+      <!-- Staff Management -->
+      <div class="panel staff-panel">
+        <div class="panel-header">
+          <h4>Staff Management</h4>
+          <a href="#" class="link-muted">View All</a>
+        </div>
+        <div class="staff-list">
+          @for (group of staffGroups(); track trackStaff($index, group)) {
+            <div class="staff-item">
+              <div class="staff-icon" [ngClass]="group.iconColor">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 3C11.66 3 13 4.34 13 6C13 7.66 11.66 9 10 9C8.34 9 7 7.66 7 6C7 4.34 8.34 3 10 3ZM10 17.2C7.5 17.2 5.29 15.92 4 13.98C4.03 11.99 8 10.9 10 10.9C11.99 10.9 15.97 11.99 16 13.98C14.71 15.92 12.5 17.2 10 17.2Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="staff-info">
+                <div class="staff-type">{{ group.type }}</div>
+                <div class="staff-total">{{ group.total }} Total Employees</div>
+              </div>
+              <span class="staff-status" [ngClass]="group.statusClass">{{ group.statusLabel }}</span>
+            </div>
+          }
+        </div>
+        <p class="staff-note">Manage your branch staff and schedules</p>
+      </div>
+
+      <!-- Top Selling Medicines -->
+      <div class="panel medicines-panel">
+        <div class="panel-header">
+          <h4>Top Selling Medicines</h4>
+        </div>
+        <div class="medicine-list">
+          @for (med of topMedicines(); track trackMedicine($index, med); let i = $index) {
+            <div class="medicine-item">
+              <div class="medicine-rank">{{ i + 1 }}</div>
+              <div class="medicine-pill-icon">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M5.625 14C4.05833 14 2.72917 13.4542 1.6375 12.3625C0.545833 11.2708 0 9.94167 0 8.375C0 7.625 0.141667 6.90833 0.425 6.225C0.708333 5.54167 1.11667 4.93333 1.65 4.4L4.4 1.65C4.93333 1.11667 5.54167 0.708333 6.225 0.425C6.90833 0.141667 7.625 0 8.375 0C9.94167 0 11.2708 0.545833 12.3625 1.6375C13.4542 2.72917 14 4.05833 14 5.625C14 6.375 13.8583 7.09167 13.575 7.775C13.2917 8.45833 12.8833 9.06667 12.35 9.6L9.6 12.35C9.06667 12.8833 8.45833 13.2917 7.775 13.575C7.09167 13.8583 6.375 14 5.625 14ZM8.275 9.5625L10.95 6.8875L7.1125 3.05L4.4375 5.725L8.275 9.5625Z" fill="#14B8A5"/>
+                </svg>
+              </div>
+              <div class="medicine-info">
+                <div class="medicine-name">{{ med.name }}</div>
+                <div class="medicine-type">{{ med.type }}</div>
+              </div>
+              <div class="medicine-sales">
+                <div class="medicine-sold">{{ med.sold | number }}</div>
+                <div class="medicine-sold-label">Units Sold</div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Branch Location -->
+      <div class="panel location-panel">
+        <div class="panel-header">
+          <h4>Branch Location</h4>
+          <a href="#" class="link-teal">
+            <svg width="4" height="7" viewBox="0 0 4 7" fill="none">
+              <path d="M2.68333 3.5L0 0.816667L0.816667 0L4.31667 3.5L0.816667 7L0 6.18333L2.68333 3.5Z" fill="#14B8A5"/>
+            </svg>
+            {{ currentBranch().name }}
+          </a>
+        </div>
+        <div class="map-wrap">
+          <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&h=200&fit=crop" alt="Map" class="map-img"/>
+          <div class="map-label">
+            <svg width="8" height="10" viewBox="0 0 8 10" fill="none">
+              <path d="M4 5C4.275 5 4.51042 4.90208 4.70625 4.70625C4.90208 4.51042 5 4.275 5 4C5 3.725 4.90208 3.48958 4.70625 3.29375C4.51042 3.09792 4.275 3 4 3C3.725 3 3.48958 3.09792 3.29375 3.29375C3.09792 3.48958 3 3.725 3 4C3 4.275 3.09792 4.51042 3.29375 4.70625C3.48958 4.90208 3.725 5 4 5ZM4 10C2.65833 8.85833 1.65625 7.79792 0.99375 6.81875C0.33125 5.83958 0 4.93333 0 4.1C0 2.85 0.402083 1.85417 1.20625 1.1125C2.01042 0.370833 2.94167 0 4 0C5.05833 0 5.98958 0.370833 6.79375 1.1125C7.59792 1.85417 8 2.85 8 4.1C8 4.93333 7.66875 5.83958 7.00625 6.81875C6.34375 7.79792 5.34167 8.85833 4 10Z" fill="#14B8A5"/>
+            </svg>
+            {{ currentBranch().address }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Low Stock Table ────────────────────────────────── -->
+    <div class="panel low-stock-panel">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <h4>Low Stock Alerts</h4>
+          @if (lowStockCount() > 0) {
+            <span class="count-badge">{{ lowStockCount() }} Items</span>
+          }
+        </div>
+        <button class="btn-restock-all" (click)="requestRestock('all')">Restock All</button>
+      </div>
+
+      @if (lowStockItems().length === 0) {
+        <div class="empty-state">No low-stock items — inventory looks healthy ✅</div>
+      } @else {
+        <div class="table-scroll">
+          <table class="stock-table">
+            <thead>
+              <tr>
+                <th>MEDICINE NAME</th>
+                <th>CURRENT STOCK</th>
+                <th>MIN. THRESHOLD</th>
+                <th>STATUS</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of lowStockItems(); track trackLowStock($index, item)) {
+                <tr>
+                  <td>
+                    <div class="medicine-cell">
+                      <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
+                        <path d="M5.625 14C4.05833 14 2.72917 13.4542 1.6375 12.3625C0.545833 11.2708 0 9.94167 0 8.375C0 7.625 0.141667 6.90833 0.425 6.225C0.708333 5.54167 1.11667 4.93333 1.65 4.4L4.4 1.65C4.93333 1.11667 5.54167 0.708333 6.225 0.425C6.90833 0.141667 7.625 0 8.375 0C9.94167 0 11.2708 0.545833 12.3625 1.6375C13.4542 2.72917 14 4.05833 14 5.625C14 6.375 13.8583 7.09167 13.575 7.775C13.2917 8.45833 12.8833 9.06667 12.35 9.6L9.6 12.35C9.06667 12.8833 8.45833 13.2917 7.775 13.575C7.09167 13.8583 6.375 14 5.625 14Z" fill="#94A3B8"/>
+                      </svg>
+                      {{ item.name }}
+                    </div>
+                  </td>
+                  <td>{{ item.stock }} Units</td>
+                  <td>{{ item.threshold }} Units</td>
+                  <td>
+                    <span class="status-badge"
+                      [class.critical]="item.status === 'Critical'"
+                      [class.out-of-stock]="item.status === 'Out of Stock'"
+                      [class.low]="item.status === 'Low'">
+                      {{ item.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <button class="btn-restock" (click)="requestRestock(item.name)">Restock</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+
+    <!-- ── Footer ─────────────────────────────────────────── -->
+    <footer class="footer">
+      © {{ currentYear }} PharmaLogix Pharmacy Management. All rights reserved.
+    </footer>
+
+    } <!-- end @if success -->
+  </main>
+</div>

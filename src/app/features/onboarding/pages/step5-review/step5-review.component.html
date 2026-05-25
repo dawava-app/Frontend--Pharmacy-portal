@@ -1,0 +1,75 @@
+<app-form-wrapper [currentStep]="5" title="Review Registration"
+    subtitle="Please confirm all information is correct before submitting.">
+    <div class="review-grid">
+        <section class="card">
+            <header>
+                <h3>🏢 Facility Info</h3>
+                <button type="button" class="link" (click)="edit('step-1')">Edit</button>
+            </header>
+            <dl>
+                <dt>Pharmacy Name</dt>
+                <dd>{{ data().basicInfo.pharmacyName || '—' }}</dd>
+                <dt>Phone</dt>
+                <dd>{{ data().basicInfo.phone || '—' }}</dd>
+                <dt>Email</dt>
+                <dd>{{ data().basicInfo.email || '—' }}</dd>
+            </dl>
+        </section>
+
+        <section class="card">
+            <header>
+                <h3>👤 Owner</h3>
+                <button type="button" class="link" (click)="edit('step-3')">Edit</button>
+            </header>
+            <dl>
+                <dt>Full Name</dt>
+                <dd>{{ data().owner.fullName || '—' }}</dd>
+                <dt>National ID</dt>
+                <dd>{{ data().owner.nationalId || '—' }}</dd>
+                <dt>Phone</dt>
+                <dd>{{ data().owner.phone || '—' }}</dd>
+                <dt>Email</dt>
+                <dd>{{ data().owner.email || '—' }}</dd>
+            </dl>
+        </section>
+
+        <section class="card">
+            <header>
+                <h3>📍 Location ({{ data().branches.length }} branch(es))</h3>
+                <button type="button" class="link" (click)="edit('step-2')">Edit</button>
+            </header>
+            @for (b of data().branches; track $index) {
+            <div class="branch-row">
+                <strong>
+                    {{ b.isMain ? '★ Main — ' : '' }}{{ b.city }} / {{ b.area }}
+                </strong>
+                <p>{{ b.address }}</p>
+                <small>({{ b.lat | number:'1.4-4' }}, {{ b.lng | number:'1.4-4' }})</small>
+            </div>
+            }
+        </section>
+
+        <section class="card">
+            <header>
+                <h3>📄 Documents</h3>
+                <button type="button" class="link" (click)="edit('step-4')">Edit</button>
+            </header>
+            @for (d of data().documents; track d.key) {
+            <div class="doc-row">✓ <span>{{ d.fileName }}</span></div>
+            } @empty {
+            <p class="empty">No documents uploaded.</p>
+            }
+        </section>
+    </div>
+
+    <p class="notice">
+        ℹ️ Submitting will initiate a 24-hour verification process.
+    </p>
+
+    <ng-container footer>
+        <button type="button" class="btn btn--ghost" (click)="onBack()">← Back to Step 4</button>
+        <button type="button" class="btn btn--primary" [disabled]="submitting()" (click)="submit()">
+            {{ submitting() ? 'Submitting…' : 'Submit Registration →' }}
+        </button>
+    </ng-container>
+</app-form-wrapper>

@@ -1,0 +1,24 @@
+<section class="success">
+    <div class="success__badge">✓</div>
+    <h1>Application Received</h1>
+    <p>
+        Your application has been submitted and is under review by the admin.
+        This process typically takes 24–48 business hours.
+    </p>
+
+    <div class="success__meta">
+        <div>
+            <small>SUBMITTED ON</small>
+            <strong>{{ submittedOn | date:'longDate' }}</strong>
+        </div>
+        <div>
+            <small>APPLICATION ID</small>
+            <strong>{{ applicationId ?? 'Pending…' }}</strong>
+        </div>
+    </div>
+
+    <p class="hint">
+        Need help? Contact our verification team at
+        <a href="mailto:support@pharmacore.com">support&#64;pharmacore.com</a>.
+    </p>
+</section>
