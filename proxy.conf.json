@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://api.dawava.shape-shifters.tech",
+    "target": "https://api.dawava.me/gateway",
     "secure": true,
     "changeOrigin": true,
     "logLevel": "debug"

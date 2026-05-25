@@ -4,7 +4,10 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { Permission, Role, RolesService } from '../../roles.service';
-import { EyeIcon, PencilEdit01Icon, Delete02Icon } from '@hugeicons/core-free-icons';
+import { Router } from '@angular/router';
+import EyeIcon from '@hugeicons/core-free-icons/EyeIcon';
+import PencilEdit01Icon from '@hugeicons/core-free-icons/PencilEdit01Icon';
+import Delete02Icon from '@hugeicons/core-free-icons/Delete02Icon';
 import { HugeiconsIconComponent } from '@hugeicons/angular';
 @Component({
   selector: 'app-roles-table',
@@ -28,7 +31,10 @@ export class RolesTableComponent implements OnChanges {
 
   private permissionMap: Record<string, Permission[]> = {};
 
-  constructor(private readonly rolesService: RolesService) {}
+  constructor(
+    private readonly rolesService: RolesService,
+    private readonly router: Router
+  ) {}
 
   ngOnChanges(): void {
     for (const role of this.roles) {
@@ -56,5 +62,9 @@ export class RolesTableComponent implements OnChanges {
       return '-';
     }
     return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(createdAt));
+  }
+
+  openRoleDetails(roleId: string): void {
+    this.router.navigate(['/roles', roleId]);
   }
 }

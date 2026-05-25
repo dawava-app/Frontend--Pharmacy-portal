@@ -4,7 +4,7 @@
   padding: 1.4rem;
 }
 
-.role-cell {
+.user-cell {
   display: flex;
   align-items: center;
   gap: 0.55rem;
@@ -15,7 +15,7 @@
   cursor: pointer;
 }
 
-.role-dot {
+.user-dot {
   width: 1.3rem;
   height: 1.3rem;
   border-radius: 999px;
@@ -25,10 +25,32 @@
 
 .description {
   color: #5e6b78;
-  max-width: 24rem;
+  max-width: 16rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.assignments-cell {
+  min-width: 14rem;
+}
+
+.none-label {
+  color: #9aa5b1;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.assignment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.assignment-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .action-icons {
@@ -46,13 +68,13 @@
 }
 
 :host ::ng-deep {
-  .roles-table {
+  .staff-table {
     border: 1px solid #ebeff5;
     border-radius: 0.9rem;
     overflow: hidden;
   }
 
-  .roles-table .p-datatable-thead > tr > th {
+  .staff-table .p-datatable-thead > tr > th {
     text-align: left;
     font-size: 0.68rem;
     color: #7a8795;
@@ -62,7 +84,7 @@
     background: #f9fbfd;
   }
 
-  .roles-table .p-datatable-tbody > tr > td {
+  .staff-table .p-datatable-tbody > tr > td {
     padding: 0.9rem;
     border-top: 1px solid #edf1f5;
     font-size: 0.83rem;
@@ -71,15 +93,8 @@
     transition: background-color 120ms ease;
   }
 
-  .roles-table .p-datatable-tbody > tr > td.clickable-cell:hover {
+  .staff-table .p-datatable-tbody > tr > td.clickable-cell:hover {
     background: #f2f8f8;
-  }
-
-  .roles-table .p-tag {
-    background: #edf1f7;
-    color: #4b5563;
-    font-size: 0.72rem;
-    border-radius: 999px;
   }
 
   .action-icons .p-button {

@@ -4,6 +4,12 @@
   gap: 1rem;
 }
 
+.subtitle {
+  margin: -0.25rem 0 0;
+  color: #6b7280;
+  font-size: 0.86rem;
+}
+
 .field {
   display: flex;
   flex-direction: column;
@@ -14,6 +20,102 @@
   font-size: 0.82rem;
   color: #5b6777;
   font-weight: 600;
+}
+
+.permissions-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.permissions-header i {
+  color: #0ea5a0;
+}
+
+.permissions-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #1f2937;
+}
+
+.permissions-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 17rem;
+  overflow: auto;
+  padding-right: 0.2rem;
+}
+
+.module-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.7rem;
+  background: #ffffff;
+}
+
+.module-header {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 0.8rem;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.module-title-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+
+.module-title-wrap small {
+  color: #6b7280;
+  font-size: 0.72rem;
+}
+
+.module-content {
+  border-top: 1px solid #f1f5f9;
+  padding: 0.65rem 0.8rem 0.8rem;
+}
+
+.permissions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem 1rem;
+}
+
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #374151;
+  font-size: 0.82rem;
+}
+
+.check-row input {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.select-all {
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px dashed #e5e7eb;
+  font-weight: 600;
+}
+
+.permissions-empty {
+  border: 1px dashed #d1d5db;
+  border-radius: 0.6rem;
+  padding: 0.7rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.82rem;
 }
 
 .error {
@@ -34,8 +136,14 @@
 :host ::ng-deep {
   .p-dialog ,.p-dialog-content {
     padding-top: 0.5rem;
-    background: whitesmoke;
+    background: #f7f7f8;
     color: black;
+  }
+
+  .p-dialog-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #111827;
   }
 
   .field .p-inputtext,
@@ -43,5 +151,12 @@
     width: 100%;
     background: white;
     color: black;
+    border-color: #d1d5db;
+  }
+
+  .field .p-inputtext:focus,
+  .field .p-inputtextarea:focus {
+    border-color: #0d9488;
+    box-shadow: 0 0 0 2px rgb(13 148 136 / 18%);
   }
 }

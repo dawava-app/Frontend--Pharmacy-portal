@@ -1,0 +1,65 @@
+<p-dialog
+    header="Change Role"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [closable]="!isSubmitting"
+    [visible]="visible"
+    [style]="{ width: '32rem' }"
+    (onHide)="onHide()"
+>
+    <div class="dialog-content">
+        <p class="subtitle">
+            Update the role for
+            <strong>{{ assignment?.branchName ?? 'this branch' }}</strong>.
+        </p>
+
+        <div class="field">
+            <label for="newRoleSelect">New Role</label>
+            <p-select
+                inputId="newRoleSelect"
+                [options]="roles"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Select new role"
+                [ngModel]="selectedRoleId()"
+                (ngModelChange)="selectedRoleId.set($event)"
+                styleClass="w-full"
+            />
+        </div>
+
+        <div class="field">
+            <label for="changeReason">Reason</label>
+            <textarea
+                id="changeReason"
+                pTextarea
+                rows="3"
+                [ngModel]="reason()"
+                (ngModelChange)="reason.set($event)"
+                placeholder="Why is this role being changed?"
+            ></textarea>
+        </div>
+
+        @if (error) {
+            <div class="error">{{ error }}</div>
+        }
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="footer-actions">
+            <p-button
+                label="Cancel"
+                severity="secondary"
+                [outlined]="true"
+                [disabled]="isSubmitting"
+                (onClick)="onHide()"
+            />
+            <p-button
+                label="Update Role"
+                [loading]="isSubmitting"
+                [disabled]="!selectedRoleId() || !reason().trim()"
+                (onClick)="onSubmit()"
+            />
+        </div>
+    </ng-template>
+</p-dialog>

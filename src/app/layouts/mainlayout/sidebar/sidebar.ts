@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Hospital02Icon,
-   DashboardSquare02Icon,
-    Store01Icon,
-    LicenseDraftIcon,
-    Message02Icon,
-    Analytics03Icon,
-    Setting07Icon,
-    UserIcon,
-    MentoringIcon
-    } from '@hugeicons/core-free-icons';
+import Hospital02Icon from '@hugeicons/core-free-icons/Hospital02Icon';
+import DashboardSquare02Icon from '@hugeicons/core-free-icons/DashboardSquare02Icon';
+import Store01Icon from '@hugeicons/core-free-icons/Store01Icon';
+import LicenseDraftIcon from '@hugeicons/core-free-icons/LicenseDraftIcon';
+import Message02Icon from '@hugeicons/core-free-icons/Message02Icon';
+import Analytics03Icon from '@hugeicons/core-free-icons/Analytics03Icon';
+import Setting07Icon from '@hugeicons/core-free-icons/Setting07Icon';
+import UserIcon from '@hugeicons/core-free-icons/UserIcon';
+import MentoringIcon from '@hugeicons/core-free-icons/MentoringIcon';
 import { HugeiconsIconComponent } from '@hugeicons/angular';
 @Component({
   selector: 'app-sidebar',

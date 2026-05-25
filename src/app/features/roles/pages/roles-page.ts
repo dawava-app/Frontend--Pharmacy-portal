@@ -3,9 +3,16 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorState } from 'primeng/paginator';
-import { Role, RolesService } from '../roles.service';
+import { RouterLink } from '@angular/router';
+import { Permission, Role, RolesService } from '../roles.service';
 import { CreateRoleModalComponent } from '../components/create-role-modal/create-role-modal.component';
 import { RolesTableComponent } from '../components/roles-table/roles-table.component';
+import { switchMap } from 'rxjs';
+
+interface PermissionGroup {
+  module: string;
+  permissions: Permission[];
+}
 
 @Component({
   selector: 'app-roles-page',
@@ -14,6 +21,7 @@ import { RolesTableComponent } from '../components/roles-table/roles-table.compo
     FormsModule,
     InputTextModule,
     ButtonModule,
+    RouterLink,
     RolesTableComponent,
     CreateRoleModalComponent
   ],
@@ -32,6 +40,8 @@ export class RolesPageComponent implements OnInit {
   readonly isCreateModalVisible = signal<boolean>(false);
   readonly isCreating = signal<boolean>(false);
   readonly createError = signal<string>('');
+  readonly permissionGroups = signal<PermissionGroup[]>([]);
+  readonly isPermissionsLoading = signal<boolean>(false);
 
   readonly filteredRoles = computed(() => {
     const searchValue = this.search().toLowerCase().trim();
@@ -79,17 +89,28 @@ export class RolesPageComponent implements OnInit {
   openCreateRoleModal(): void {
     this.createError.set('');
     this.isCreateModalVisible.set(true);
+    this.loadPermissionsForCreateRole();
   }
 
   closeCreateRoleModal(): void {
     this.isCreateModalVisible.set(false);
   }
 
-  onCreateRole(payload: { name: string; description: string }): void {
+  onCreateRole(payload: { name: string; description: string; permissionIds: string[] }): void {
     this.isCreating.set(true);
     this.createError.set('');
 
-    this.rolesService.createRole(payload).subscribe({
+    this.rolesService.createRole({ name: payload.name, description: payload.description }).pipe(
+      switchMap((createdRole) => {
+        if (!payload.permissionIds.length) {
+          return [createdRole];
+        }
+
+        return this.rolesService
+          .addRolePermissions(createdRole.id, { permissionIds: payload.permissionIds })
+          .pipe(switchMap(() => [createdRole]));
+      })
+    ).subscribe({
       next: () => {
         this.isCreating.set(false);
         this.closeCreateRoleModal();
@@ -100,6 +121,59 @@ export class RolesPageComponent implements OnInit {
         this.createError.set('Failed to create role. Please try again.');
       },
     });
+  }
+
+  private loadPermissionsForCreateRole(): void {
+    this.isPermissionsLoading.set(true);
+    this.rolesService.getPermissions(undefined, true).subscribe({
+      next: (permissions) => {
+        this.permissionGroups.set(this.groupPermissionsByModule(permissions));
+        this.isPermissionsLoading.set(false);
+      },
+      error: () => {
+        this.permissionGroups.set([]);
+        this.isPermissionsLoading.set(false);
+      }
+    });
+  }
+
+  private groupPermissionsByModule(permissions: Permission[]): PermissionGroup[] {
+    const map = new Map<string, Permission[]>();
+
+    permissions.forEach((permission) => {
+      const moduleLabel = this.getModuleLabel(permission.module);
+      const current = map.get(moduleLabel) ?? [];
+      current.push(permission);
+      map.set(moduleLabel, current);
+    });
+
+    return Array.from(map.entries())
+      .map(([module, items]) => ({
+        module,
+        permissions: [...items].sort((a, b) => a.name.localeCompare(b.name))
+      }))
+      .sort((a, b) => a.module.localeCompare(b.module));
+  }
+
+  private getModuleLabel(moduleKey: string): string {
+    const labelMap: Record<string, string> = {
+      dashboard: 'Dashboard',
+      'core.inventory': 'Inventory Control',
+      'core.patients': 'Patient Records',
+      'core.sales': 'Order Management',
+      'analytics.reports': 'Reports & Analytics',
+      'core.staff': 'Users Management'
+    };
+
+    if (labelMap[moduleKey]) {
+      return labelMap[moduleKey];
+    }
+
+    return moduleKey
+      .split('.')
+      .slice(-1)[0]
+      .replace(/[-_]/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
   private loadRoles(): void {

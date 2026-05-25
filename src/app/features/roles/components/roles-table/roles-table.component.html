@@ -15,20 +15,20 @@
     </ng-template>
     <ng-template pTemplate="body" let-role>
         <tr>
-            <td>
+            <td class="clickable-cell" (click)="openRoleDetails(role.id)">
                 <div class="role-cell">
                     <span class="role-dot"></span>
                     <span>{{ role.name }}</span>
                 </div>
             </td>
-            <td class="description">{{ role.description }}</td>
-            <td>
+            <td class="description clickable-cell" (click)="openRoleDetails(role.id)">{{ role.description }}</td>
+            <td class="clickable-cell" (click)="openRoleDetails(role.id)">
                 <p-tag [value]="getPermissionCount(role.id) + ' Permissions'" severity="secondary"></p-tag>
             </td>
-            <td>{{ getCreatedAtLabel(role.createdAt) }}</td>
+            <td class="clickable-cell" (click)="openRoleDetails(role.id)">{{ getCreatedAtLabel(role.createdAt) }}</td>
             <td>
                 <div class="action-icons">
-                    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" severity="secondary"><hugeicons-icon [icon]="EyeIcon"></hugeicons-icon></p-button>
+                    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" severity="secondary" (onClick)="openRoleDetails(role.id)"><hugeicons-icon [icon]="EyeIcon"></hugeicons-icon></p-button>
                     <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="secondary"><hugeicons-icon [icon]="PencilEdit01Icon"></hugeicons-icon></p-button>
                     <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="secondary"><hugeicons-icon [icon]="Delete02Icon"></hugeicons-icon></p-button>
                 </div>

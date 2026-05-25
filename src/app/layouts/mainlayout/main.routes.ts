@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { roleRoutes } from '../../features/roles/roles.routes';
+import { staffRoutes } from '../../features/staff/staff.routes';
 import { authGuard } from '../../core/guards/auth.guard';
 
 export const mainRoutes: Routes = [
@@ -13,7 +14,8 @@ export const mainRoutes: Routes = [
                 path: 'dashboard',
                 loadComponent: () => import('../../features/dashboard/dashboard').then((m) => m.Dashboard),
             },
-            ...roleRoutes
+            ...roleRoutes,
+            ...staffRoutes
         ],
     },
 ];
