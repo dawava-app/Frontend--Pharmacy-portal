@@ -1,0 +1,99 @@
+<section class="role-details-page">
+  <header class="top-row">
+    <a routerLink="/roles" class="back-link">Back to roles</a>
+    <div class="actions">
+      <p-button label="View Audit Log" severity="secondary" [outlined]="true"></p-button>
+      @if (!isEditMode()) {
+        <p-button label="Edit" severity="secondary" [outlined]="true" [disabled]="loading()" (onClick)="startEdit()"></p-button>
+      } @else {
+        <p-button label="Cancel" severity="secondary" [outlined]="true" [disabled]="isSaving()" (onClick)="cancelEdit()"></p-button>
+        <p-button
+          label="Save Changes"
+          [loading]="isSaving()"
+          [disabled]="loading()"
+          (onClick)="saveChanges()"
+        ></p-button>
+      }
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="loading-wrap">
+      <p-progress-spinner strokeWidth="5" ariaLabel="Loading role details"></p-progress-spinner>
+    </div>
+  } @else if (error()) {
+    <div class="alert">{{ error() }}</div>
+  } @else if (roleDetails(); as role) {
+    <header class="page-header">
+      <p class="eyebrow">Role Editor</p>
+      @if (!isEditMode()) {
+        <h1>{{ role.name }}</h1>
+        <p>{{ role.description }}</p>
+      } @else {
+        <h1>{{ role.name }}</h1>
+        <p>{{ role.description }}</p>
+      }
+    </header>
+
+    @if (saveError()) {
+      <div class="alert">{{ saveError() }}</div>
+    }
+    @if (saveSuccess()) {
+      <div class="success">{{ saveSuccess() }}</div>
+    }
+
+    <article class="matrix-card">
+      <div class="matrix-head">
+        <div>
+          <h2>Permissions Matrix</h2>
+          <p>Define granular access levels for each system module.</p>
+        </div>
+        <div class="matrix-actions">
+          <button type="button" class="ghost-btn" [disabled]="!isEditMode()" (click)="grantAll()">Grant All</button>
+          <button type="button" class="ghost-btn" [disabled]="!isEditMode()" (click)="revokeAll()">Revoke All</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Module</th>
+              <th>Create</th>
+              <th>Read</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of matrixRows(); track row.module) {
+              <tr>
+                <td class="module-cell">{{ row.module }}</td>
+                <td>
+                  <button type="button" class="cell-btn" [disabled]="!canEditCell(row.values.create.permissionId)" (click)="togglePermission(row.values.create.permissionId)">
+                    <span class="dot" [class.active]="row.values.create.active"></span>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="cell-btn" [disabled]="!canEditCell(row.values.read.permissionId)" (click)="togglePermission(row.values.read.permissionId)">
+                    <span class="dot" [class.active]="row.values.read.active"></span>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="cell-btn" [disabled]="!canEditCell(row.values.update.permissionId)" (click)="togglePermission(row.values.update.permissionId)">
+                    <span class="dot" [class.active]="row.values.update.active"></span>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="cell-btn" [disabled]="!canEditCell(row.values.delete.permissionId)" (click)="togglePermission(row.values.delete.permissionId)">
+                    <span class="dot" [class.active]="row.values.delete.active"></span>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </article>
+  }
+</section>

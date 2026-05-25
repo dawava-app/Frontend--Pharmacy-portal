@@ -1,0 +1,76 @@
+<p-dialog
+    header="Assign Branch Role"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [closable]="!isSubmitting"
+    [visible]="visible"
+    [style]="{ width: '32rem' }"
+    (onHide)="onHide()"
+>
+    <div class="dialog-content">
+        <p class="subtitle">Assign this staff member to a branch with a specific role.</p>
+
+        <div class="field">
+            <label for="branchSelect">Branch</label>
+            <p-select
+                inputId="branchSelect"
+                [options]="branches"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Select branch"
+                [ngModel]="selectedBranchId()"
+                (ngModelChange)="selectedBranchId.set($event)"
+                styleClass="w-full"
+            />
+        </div>
+
+        <div class="field">
+            <label for="roleSelect">Role</label>
+            <p-select
+                inputId="roleSelect"
+                [options]="roles"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Select role"
+                [ngModel]="selectedRoleId()"
+                (ngModelChange)="selectedRoleId.set($event)"
+                styleClass="w-full"
+            />
+        </div>
+
+        <div class="field">
+            <label for="assignReason">Reason</label>
+            <textarea
+                id="assignReason"
+                pTextarea
+                rows="3"
+                [ngModel]="reason()"
+                (ngModelChange)="reason.set($event)"
+                placeholder="Why is this assignment being made?"
+            ></textarea>
+        </div>
+
+        @if (error) {
+            <div class="error">{{ error }}</div>
+        }
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="footer-actions">
+            <p-button
+                label="Cancel"
+                severity="secondary"
+                [outlined]="true"
+                [disabled]="isSubmitting"
+                (onClick)="onHide()"
+            />
+            <p-button
+                label="Assign Role"
+                [loading]="isSubmitting"
+                [disabled]="!selectedBranchId() || !selectedRoleId() || !reason().trim()"
+                (onClick)="onSubmit()"
+            />
+        </div>
+    </ng-template>
+</p-dialog>

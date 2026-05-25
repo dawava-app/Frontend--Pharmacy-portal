@@ -14,6 +14,8 @@ import { roleRoutes } from '../../features/roles/roles.routes';
 import { authGuard }  from '../../core/guards/auth.guard';
 import { isDevMode }  from '@angular/core';
 import { DASHBOARD_ROUTES } from '../../features/dashboard/dashboard.routes';
+import { staffRoutes } from '../../features/staff/staff.routes';
+import { authGuard } from '../../core/guards/auth.guard';
 
 export const mainRoutes: Routes = [
 
@@ -73,8 +75,8 @@ export const mainRoutes: Routes = [
                   .then(m => m.StaffDashboard),
               title: '[DEV] Staff Dashboard',
             },
-          ],
-        },
-      ] as Routes)
-    : []),
+            ...roleRoutes,
+            ...staffRoutes
+        ],
+    },
 ];

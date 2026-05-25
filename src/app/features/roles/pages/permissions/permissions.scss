@@ -1,0 +1,177 @@
+.permissions-page {
+  padding: 0.75rem;
+  color: #1f2937;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.page-header p {
+  margin: 0.35rem 0 0;
+  color: #667085;
+  font-size: 0.95rem;
+  max-width: 44rem;
+  line-height: 1.35;
+}
+
+.permissions-card {
+  margin-top: 1rem;
+  background: #fff;
+  border: 1px solid #e6edf3;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.tabs-row {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.6rem 0.7rem;
+  border-bottom: 1px solid #e8eef4;
+}
+
+.tab-btn {
+  border: 0;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: #12b5a6;
+  color: #fff;
+}
+
+.filters-row {
+  display: grid;
+  grid-template-columns: 1fr 16rem auto;
+  gap: 0.85rem;
+  padding: 1rem;
+  align-items: end;
+}
+
+.search-wrap,
+.module-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.search-wrap label,
+.module-wrap label {
+  color: #475467;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.search-wrap .p-input-icon-left {
+  width: 100%;
+}
+
+.search-wrap input {
+  width: 100%;
+}
+
+.table-summary {
+  color: #64748b;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.7rem 1rem 0.9rem;
+}
+
+.permission-name {
+  font-weight: 700;
+  font-size: 0.79rem;
+  color: #1f2937;
+}
+
+.description-col {
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+.actions-col {
+  text-align: center;
+  width: 5rem;
+}
+
+.empty-state {
+  text-align: center;
+  color: #64748b;
+  padding: 1rem;
+}
+
+.alert {
+  margin: 0 1rem 0.85rem;
+  background: #fff4e8;
+  color: #b45309;
+  border: 1px solid #f8d7a2;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.78rem;
+}
+
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+::ng-deep {
+  .create-permission-btn {
+    background: #12b5a6;
+    border-color: #12b5a6;
+    border-radius: 999px;
+    font-weight: 600;
+    height: 2.5rem;
+  }
+
+  .filters-row .p-inputtext,
+  .filters-row .p-select {
+    border-radius: 0.8rem;
+    border-color: #e1e8f0;
+    background: #f8fafc;
+    height: 2.5rem;
+  }
+
+  .filters-row .p-select {
+    display: flex;
+    align-items: center;
+  }
+
+  .permissions-table .p-datatable-thead > tr > th {
+    background: #f9fbfd;
+    color: #64748b;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.8rem 1rem;
+  }
+
+  .permissions-table .p-datatable-tbody > tr > td {
+    padding: 0.72rem 1rem;
+    border-top: 1px solid #edf2f7;
+    background: #fff;
+  }
+
+  .permissions-table .p-tag {
+    border-radius: 999px;
+    font-size: 0.62rem;
+    padding: 0.2rem 0.45rem;
+  }
+
+  .permissions-table .p-paginator {
+    border: 0;
+    border-top: 1px solid #edf2f7;
+    padding: 0.45rem 0.75rem;
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,49 @@
+<p-table
+    [value]="assignments"
+    [loading]="isLoading"
+    styleClass="assignments-table"
+    [tableStyle]="{ 'min-width': '48rem' }"
+>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Branch</th>
+            <th>Role</th>
+            <th>Assigned Date</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-assignment>
+        <tr>
+            <td class="branch-cell">{{ assignment.branchName ?? assignment.branchId }}</td>
+            <td>
+                <p-tag [value]="assignment.roleName ?? assignment.roleId" severity="secondary"></p-tag>
+            </td>
+            <td>{{ getAssignedAtLabel(assignment.assignedAt) }}</td>
+            <td>
+                <div class="action-icons">
+                    <p-button
+                        [rounded]="true"
+                        [text]="true"
+                        severity="secondary"
+                        (onClick)="changeRole.emit(assignment)"
+                    >
+                        <hugeicons-icon [icon]="PencilEdit01Icon"></hugeicons-icon>
+                    </p-button>
+                    <p-button
+                        [rounded]="true"
+                        [text]="true"
+                        severity="danger"
+                        (onClick)="revoke.emit(assignment)"
+                    >
+                        <hugeicons-icon [icon]="Delete02Icon"></hugeicons-icon>
+                    </p-button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="4" class="state-row">No branch role assignments yet.</td>
+        </tr>
+    </ng-template>
+</p-table>

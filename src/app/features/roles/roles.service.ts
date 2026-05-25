@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { API_URL } from '../../app.config';
 
 export type RoleId = string;
@@ -10,8 +10,23 @@ export interface Permission {
   id: PermissionId;
   name: string;
   module: string;
+  action: string;
   isActive: boolean;
   description?: string;
+}
+
+interface ApiCollectionResponse<T> {
+  success?: boolean;
+  data?: T[];
+  items?: T[];
+  result?: T[];
+}
+
+interface ApiItemResponse<T> {
+  success?: boolean;
+  data?: T;
+  item?: T;
+  result?: T;
 }
 
 export interface Role {
@@ -21,6 +36,12 @@ export interface Role {
   isActive?: boolean;
   createdAt?: string;
   permissionsCount?: number;
+}
+
+export interface RoleDetails extends Role {
+  isSystemRole?: boolean;
+  updatedAt?: string;
+  permissions: Permission[];
 }
 
 export interface CreateRoleDto {
@@ -54,7 +75,33 @@ export class RolesService {
       params = params.set('IsActive', isActive);
     }
 
-    return this.http.get<Permission[]>(`${this.apiBase}/admin/permissions`, { params });
+    return this.http
+      .get<Permission[] | ApiCollectionResponse<Permission>>(`${this.apiBase}/admin/permissions`, { params })
+      .pipe(
+        map((response) => {
+          if (Array.isArray(response)) {
+            return response;
+          }
+
+          if (!response || typeof response !== 'object') {
+            return [];
+          }
+
+          if (Array.isArray(response.data)) {
+            return response.data;
+          }
+
+          if (Array.isArray(response.items)) {
+            return response.items;
+          }
+
+          if (Array.isArray(response.result)) {
+            return response.result;
+          }
+
+          return [];
+        })
+      );
   }
 
 
@@ -73,6 +120,31 @@ export class RolesService {
 
   getRoleById(roleId: RoleId): Observable<Role> {
     return this.http.get<Role>(`${this.apiBase}/admin/roles/${roleId}`);
+  }
+
+  getRoleDetails(roleId: RoleId): Observable<RoleDetails> {
+    return this.http
+      .get<RoleDetails | ApiItemResponse<RoleDetails>>(`${this.apiBase}/admin/roles/${roleId}`)
+      .pipe(
+        map((response) => {
+          if (response && typeof response === 'object' && !Array.isArray(response)) {
+            const wrapped = response as ApiItemResponse<RoleDetails>;
+            const details = wrapped.data ?? wrapped.item ?? wrapped.result;
+            if (details) {
+              return {
+                ...details,
+                permissions: Array.isArray(details.permissions) ? details.permissions : []
+              };
+            }
+          }
+
+          const direct = response as RoleDetails;
+          return {
+            ...direct,
+            permissions: Array.isArray(direct.permissions) ? direct.permissions : []
+          };
+        })
+      );
   }
 
   createRole(payload: CreateRoleDto): Observable<Role> {

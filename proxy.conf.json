@@ -1,8 +1,8 @@
 
 {
   "/api": {
-    "target": "https://100.26.109.162/",
-    "secure": false,
+    "target": "https://api.dawava.me/gateway",
+    "secure": true,
     "changeOrigin": true,
     "logLevel": "debug"
   }

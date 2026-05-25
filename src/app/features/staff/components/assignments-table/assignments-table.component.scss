@@ -1,0 +1,46 @@
+.state-row {
+  text-align: center;
+  color: #6b7280;
+  padding: 1.4rem;
+}
+
+.branch-cell {
+  font-weight: 600;
+}
+
+.action-icons {
+  display: flex;
+  gap: 0.35rem;
+}
+
+:host ::ng-deep {
+  .assignments-table {
+    border: 1px solid #ebeff5;
+    border-radius: 0.9rem;
+    overflow: hidden;
+  }
+
+  .assignments-table .p-datatable-thead > tr > th {
+    text-align: left;
+    font-size: 0.68rem;
+    color: #7a8795;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    padding: 0.85rem 0.9rem;
+    background: #f9fbfd;
+  }
+
+  .assignments-table .p-datatable-tbody > tr > td {
+    padding: 0.9rem;
+    border-top: 1px solid #edf1f5;
+    font-size: 0.83rem;
+    color: #1f2a37;
+    background: #f9fbfd;
+  }
+
+  .action-icons .p-button {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-color: #d8e0e8;
+  }
+}

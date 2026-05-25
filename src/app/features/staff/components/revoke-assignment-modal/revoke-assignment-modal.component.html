@@ -1,0 +1,54 @@
+<p-dialog
+    header="Revoke Assignment"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [closable]="!isSubmitting"
+    [visible]="visible"
+    [style]="{ width: '32rem' }"
+    (onHide)="onHide()"
+>
+    <div class="dialog-content">
+        <p class="subtitle warning">
+            This will remove
+            <strong>{{ assignment?.roleName ?? 'the role' }}</strong>
+            at
+            <strong>{{ assignment?.branchName ?? 'this branch' }}</strong>.
+        </p>
+
+        <div class="field">
+            <label for="revokeReason">Reason</label>
+            <textarea
+                id="revokeReason"
+                pTextarea
+                rows="3"
+                [ngModel]="reason()"
+                (ngModelChange)="reason.set($event)"
+                placeholder="Why is this assignment being revoked?"
+            ></textarea>
+        </div>
+
+        @if (error) {
+            <div class="error">{{ error }}</div>
+        }
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="footer-actions">
+            <p-button
+                label="Cancel"
+                severity="secondary"
+                [outlined]="true"
+                [disabled]="isSubmitting"
+                (onClick)="onHide()"
+            />
+            <p-button
+                label="Revoke Assignment"
+                severity="danger"
+                [loading]="isSubmitting"
+                [disabled]="!reason().trim()"
+                (onClick)="onSubmit()"
+            />
+        </div>
+    </ng-template>
+</p-dialog>

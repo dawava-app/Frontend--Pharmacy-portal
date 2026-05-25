@@ -19,7 +19,13 @@
                 <h1>Roles &amp; Permissions</h1>
                 <p>Manage system access levels and staff responsibilities.</p>
             </div>
-            <p><a routerLink="permissions">Permissions</a></p>
+            <p-button
+                label="Permissions"
+                icon="pi pi-shield"
+                severity="secondary"
+                [outlined]="true"
+                routerLink="/roles/permissions"
+            ></p-button>
             <p-button label="Create Role" icon="pi pi-plus" styleClass="create-btn" (onClick)="openCreateRoleModal()"></p-button>
         </div>
 
@@ -42,6 +48,8 @@
 <app-create-role-modal
     [visible]="isCreateModalVisible()"
     [isSubmitting]="isCreating()"
+    [permissionGroups]="permissionGroups()"
+    [isPermissionsLoading]="isPermissionsLoading()"
     [error]="createError()"
     (cancel)="closeCreateRoleModal()"
     (submitRole)="onCreateRole($event)"
