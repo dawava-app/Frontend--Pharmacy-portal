@@ -8,11 +8,13 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { tokenInterceptor } from './core/interceptors/token.interceptor';
 import { InjectionToken } from '@angular/core';
 import { environment } from '../environments/environment';
-export const API_URL = new InjectionToken<string>('API_URL', { factory: () => environment.apiUrl });
+const normalizedApiUrl = environment.apiUrl.replace(/\/+$/, '');
+
+export const API_URL = new InjectionToken<string>('API_URL', { factory: () => normalizedApiUrl });
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    { provide: API_URL, useValue: environment.apiUrl },
+    { provide: API_URL, useValue: normalizedApiUrl },
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideHttpClient(withInterceptors([tokenInterceptor])),

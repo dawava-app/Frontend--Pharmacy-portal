@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, switchMap, tap, timeout } from 'rxjs/operators';
+import { Observable, forkJoin, of, throwError } from 'rxjs';
+import { catchError, map, switchMap, tap, timeout } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
+import { API_URL } from '../../app.config';
 
 export interface LoginRequest {
   identifier: string;
@@ -15,8 +16,87 @@ export interface LoginResponse {
   access_token: string;
   refresh_token: string;
   scope?: {
+    branch_id?: string;
     roles?: string[];
   };
+}
+
+export interface AuthBranchRole {
+  id: string;
+  branchId: string;
+  branchName: string;
+  roleId: string;
+  roleName: string;
+  isActive: boolean;
+  assignedAt: string;
+  revokedAt: string | null;
+}
+
+export interface AuthMeUser {
+  branchRoles: AuthBranchRole[];
+  id: string;
+  username: string;
+  email: string;
+  phone: string;
+  fullName: string;
+  isActive: boolean;
+  status: number;
+  isEmailVerified: boolean;
+  mustChangePassword: boolean;
+  lastLoginAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AuthMeResponse {
+  success: boolean;
+  data: {
+    isAuthenticated: boolean;
+    userId: string;
+    user: AuthMeUser;
+    branchId: string;
+    roles: string[];
+    isSystemAdmin: boolean;
+    isPharmacyAdmin: boolean;
+  };
+}
+
+export interface ScopeOption {
+  branchId: string;
+  branchName: string;
+  roles: string[];
+  roleNames: string[];
+  isCurrent: boolean;
+}
+
+export interface AuthScopesResponse {
+  is_system_admin: boolean;
+  scopes: Array<{
+    branch_id: string;
+    roles: string[];
+    is_current: boolean;
+  }>;
+}
+
+export interface SwitchBranchRequest {
+  branch_id: string;
+  refresh_token: string;
+}
+
+export interface SwitchBranchResponse {
+  access_token: string;
+  refresh_token: string;
+  token_type: string;
+  expires_in: number;
+  refresh_expires_in: number;
+  scope: {
+    roles: string[];
+    branch_id: string;
+  };
+  available_scopes: Array<{
+    branch_id: string;
+    roles: string[];
+  }>;
 }
 
 export interface PermissionsResponse {
@@ -32,8 +112,7 @@ export interface RefreshResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly cookieService = inject(SsrCookieService);
-
-  private readonly apiBase = '';
+  private readonly apiBase = inject(API_URL);
   private readonly tokenKey = 'dawava_token';
   private readonly roleKey = 'dawava_role';
   private readonly refreshKey = 'dawava_refresh_token';
@@ -44,22 +123,84 @@ export class AuthService {
   ) {}
 
   login(payload: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiBase}/api/auth/login`, payload).pipe(
+    return this.http.post<LoginResponse>(`${this.apiBase}/auth/login`, payload).pipe(
       timeout(15000),
       tap((res) => {
-        this.setSessionItem(this.tokenKey, res.access_token);
-        this.setLocalItem(this.refreshKey, res.refresh_token);
-        const roleId = res?.scope?.roles?.[0];
-        if (roleId) {
-          this.setSessionItem(this.roleKey, roleId);
-        }
+        this.storeSessionTokens(res.access_token, res.refresh_token, res?.scope?.roles?.[0]);
       }),
       catchError((err) => throwError(() => new Error(this.extractErrorMessage(err)))),
     );
   }
 
+  getMe(): Observable<AuthMeResponse> {
+    return this.http.get<AuthMeResponse>(`${this.apiBase}/auth/me`);
+  }
+
+  getScopes(): Observable<ScopeOption[]> {
+    return forkJoin({
+      me: this.getMe().pipe(catchError(() => of(null))),
+      scopes: this.http.get<AuthScopesResponse>(`${this.apiBase}/auth/scopes`),
+    }).pipe(
+      map(({ me, scopes }) => {
+        const branchRoles = me?.data?.user?.branchRoles ?? [];
+        const branchRoleGroups = new Map<string, AuthBranchRole[]>();
+
+        for (const branchRole of branchRoles) {
+          const current = branchRoleGroups.get(branchRole.branchId) ?? [];
+          current.push(branchRole);
+          branchRoleGroups.set(branchRole.branchId, current);
+        }
+
+        return scopes.scopes.map((scope) => {
+          const branchRoleSet = branchRoleGroups.get(scope.branch_id) ?? [];
+          const branchName =
+            branchRoleSet[0]?.branchName ??
+            (scope.branch_id === '00000000-0000-0000-0000-000000000000'
+              ? 'Global'
+              : `Branch ${scope.branch_id}`);
+          const roleNames = Array.from(
+            new Set(
+              branchRoleSet
+                .filter((branchRole) => branchRole.isActive)
+                .map((branchRole) => branchRole.roleName)
+                .filter((roleName): roleName is string => Boolean(roleName)),
+            ),
+          );
+
+          return {
+            branchId: scope.branch_id,
+            branchName,
+            roles: scope.roles,
+            roleNames,
+            isCurrent: scope.is_current,
+          } satisfies ScopeOption;
+        });
+      }),
+      catchError((err) => throwError(() => new Error(this.extractErrorMessage(err)))),
+    );
+  }
+
+  switchBranch(branchId: string): Observable<SwitchBranchResponse> {
+    const refreshToken = this.getRefreshToken();
+    if (!refreshToken) {
+      return throwError(() => new Error('No refresh token available.'));
+    }
+
+    return this.http
+      .post<SwitchBranchResponse>(`${this.apiBase}/auth/switch-branch`, {
+        branch_id: branchId,
+        refresh_token: refreshToken,
+      } satisfies SwitchBranchRequest)
+      .pipe(
+        tap((res) => {
+          this.storeSessionTokens(res.access_token, res.refresh_token, res?.scope?.roles?.[0]);
+        }),
+        catchError((err) => throwError(() => new Error(this.extractErrorMessage(err)))),
+      );
+  }
+
   getPermissions(): Observable<PermissionsResponse> {
-    return this.http.get<PermissionsResponse>(`${this.apiBase}/api/auth/me/permissions`).pipe(
+    return this.http.get<PermissionsResponse>(`${this.apiBase}/auth/me/permissions`).pipe(
       tap((res) => this.setSessionItem(this.roleKey, res.role)),
       catchError((err) => {
         const savedRole = this.getRole();
@@ -78,7 +219,7 @@ export class AuthService {
     }
 
     return this.http
-      .post<RefreshResponse>(`${this.apiBase}/api/auth/refresh`, {
+      .post<RefreshResponse>(`${this.apiBase}/auth/refresh`, {
         refresh_token: refreshToken,
       })
       .pipe(
@@ -137,7 +278,7 @@ export class AuthService {
 
     if (refreshToken) {
       this.http
-        .post(`${this.apiBase}/api/auth/logout`, { refresh_token: refreshToken })
+        .post(`${this.apiBase}/auth/logout`, { refresh_token: refreshToken })
         .subscribe({ complete: () => undefined });
     }
 
@@ -213,6 +354,18 @@ export class AuthService {
   private getCookieItem(key: string): string | null {
     const value = this.cookieService.get(key);
     return value || null;
+  }
+
+  private storeSessionTokens(accessToken: string, refreshToken: string, roleId?: string | null): void {
+    this.setSessionItem(this.tokenKey, accessToken);
+    this.setLocalItem(this.refreshKey, refreshToken);
+
+    if (roleId) {
+      this.setSessionItem(this.roleKey, roleId);
+      return;
+    }
+
+    this.removeSessionItem(this.roleKey);
   }
 
   private setSessionItem(key: string, value: string): void {

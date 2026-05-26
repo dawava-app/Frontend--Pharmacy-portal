@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-mainlayout',
+  standalone: true,
   imports: [Sidebar, RouterOutlet],
   templateUrl: './mainlayout.html',
   styleUrl: './mainlayout.scss',

@@ -10,9 +10,11 @@ import Setting07Icon from '@hugeicons/core-free-icons/Setting07Icon';
 import UserIcon from '@hugeicons/core-free-icons/UserIcon';
 import MentoringIcon from '@hugeicons/core-free-icons/MentoringIcon';
 import { HugeiconsIconComponent } from '@hugeicons/angular';
+import { ScopesSwitcherComponent } from '../../../features/scopes/scopes-switcher.component';
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink, HugeiconsIconComponent],
+  standalone: true,
+  imports: [RouterLink, HugeiconsIconComponent, ScopesSwitcherComponent],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })
